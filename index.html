@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillCraft - Master Digital Skills</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --secondary: #3a0ca3;
+            --danger: #f72585;
+            --danger-light: #ffebf2;
+            --info: #4cc9f0;
+            --info-light: #e6f9ff;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover;
+            opacity: 0.15;
+        }
+        
+        .course-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .course-img {
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .web-dev {
+            border-top: 4px solid var(--primary);
+        }
+        
+        .cyber {
+            border-top: 4px solid var(--danger);
+        }
+        
+        .finance {
+            border-top: 4px solid var(--info);
+        }
+        
+        .price-card {
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .best-value {
+            border: 2px solid var(--primary);
+            position: relative;
+        }
+        
+        .best-value-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--primary);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-icon.web-dev {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .feature-icon.cyber {
+            background-color: var(--danger-light);
+            color: var(--danger);
+        }
+        
+        .feature-icon.finance {
+            background-color: var(--info-light);
+            color: var(--info);
+        }
+        
+        .instructor-img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .login-card {
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#instructor">Instructor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#login">Login</a>
+                    </li>
+                </ul>
+                <a href="#pricing" class="btn btn-primary ms-lg-3 px-4">Enroll Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero py-5">
+        <div class="container py-4 position-relative">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold mb-4">Master Digital Skills That Matter</h1>
+                    <p class="lead mb-4">Transform your career with our 8 courses in Web Development, Cybersecurity, and Financial Trading. Learn industry needs.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#pricing" class="btn btn-light btn-lg px-4 fw-medium">Enroll Now</a>
+                        <a href="#courses" class="btn btn-outline-light btn-lg px-4">Explore Courses</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="img-fluid rounded-3 shadow-lg" alt="Online Learning">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="py-5" id="courses">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Comprehensive Course Offerings</h2>
+                <p class="text-muted">Practical skills you can apply immediately</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Web Development -->
+                <div class="col-md-4">
+                    <div class="course-card web-dev h-100">
+                        <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="course-img w-100" alt="Web Development">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon web-dev me-3">
+                                    <i class="fas fa-code fa-lg"></i>
+                                </div>
+                                <h4 class="mb-0">Web Development</h4>
+                            </div>
+                            <p class="text-muted">Build complete websites from scratch to deployment</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> HTML5, CSS3, JavaScript (ES6+)</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Bootstrap & Responsive Design</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> Firebase Backend Services</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> SEO & Google Ranking</li>
+                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i> 5 Real-world Projects</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-primary">Rs 249</span>
+                                <a href="#pricing" class="btn btn-sm btn-primary">Enroll Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cybersecurity -->
+                <div class="col-md-4">
+                    <div class="course-card cyber h-100">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="course-img w-100" alt="Cybersecurity">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon cyber me-3">
+                                    <i class="fas fa-shield-alt fa-lg"></i>
+                                </div>
+                                <h4 class="mb-0">Cybersecurity</h4>
+                            </div>
+                            <p class="text-muted">Protect yourself from digital threats and hackers</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="fas fa-check text-danger me-2"></i> How hackers track locations</li>
+                                <li class="mb-2"><i class="fas fa-check text-danger me-2"></i> Social media protection</li>
+                                <li class="mb-2"><i class="fas fa-check text-danger me-2"></i> Secure personal data</li>
+                                <li class="mb-2"><i class="fas fa-check text-danger me-2"></i> Practical hacking demos</li>
+                                <li class="mb-2"><i class="fas fa-check text-danger me-2"></i> Ethical hacking basics</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-danger">Rs 249</span>
+                                <a href="#pricing" class="btn btn-sm btn-danger">Enroll Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Financial Trading -->
+                <div class="col-md-4">
+                    <div class="course-card finance h-100">
+                        <img src="https://images.unsplash.com/photo-1468254095679-bbcba94a7066?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="course-img w-100" alt="Financial Trading">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon finance me-3">
+                                    <i class="fas fa-chart-line fa-lg"></i>
+                                </div>
+                                <h4 class="mb-0">Financial Trading</h4>
+                            </div>
+                            <p class="text-muted">Master markets and build sustainable wealth</p>
+                            <ul class="list-unstyled mb-4">
+                                <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Stock market fundamentals</li>
+                                <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Forex & Crypto trading</li>
+                                <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Technical analysis</li>
+                                <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Trading strategies</li>
+                                <li class="mb-2"><i class="fas fa-check text-info me-2"></i> Risk management</li>
+                            </ul>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-info">Rs 249</span>
+                                <a href="#pricing" class="btn btn-sm btn-info text-white">Enroll Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-5 bg-light" id="pricing">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Simple, Transparent Pricing</h2>
+                <p class="text-muted">Invest in your future today</p>
+            </div>
+            
+            <div class="row justify-content-center g-4">
+                <!-- Single Course -->
+                <div class="col-md-4">
+                    <div class="price-card card h-100">
+                        <div class="card-body p-4 text-center">
+                            <h4 class="fw-bold mb-3">Single Course</h4>
+                            <h2 class="fw-bold mb-3">Rs 249</h2>
+                            <p class="text-muted mb-4">One-time payment</p>
+                            <ul class="list-unstyled mb-4 text-start">
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> One course of your choice</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Lifetime access</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Downloadable resources</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Certificate of completion</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Q&A support</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary w-100 py-2">Get This Course</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- All Courses Bundle -->
+                <div class="col-md-4">
+                    <div class="price-card card h-100 best-value">
+                        <div class="best-value-badge">SAVE 50%</div>
+                        <div class="card-body p-4 text-center">
+                            <h4 class="fw-bold mb-3">All Courses Bundle</h4>
+                            <h2 class="fw-bold mb-1">Rs 499</h2>
+                            <p class="text-muted mb-4"><del class="text-danger">Rs 747</del> (Save Rs 248)</p>
+                            <ul class="list-unstyled mb-4 text-start">
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> All 3 premium courses</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Bonus materials</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Priority support</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Exclusive community</li>
+                                <li class="mb-3 ps-3"><i class="fas fa-check-circle text-success me-2"></i> Live Q&A sessions</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100 py-2">Get All Courses</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Student Login -->
+                <div class="col-md-4">
+                    <div class="price-card card h-100">
+                        <div class="card-body p-4 text-center d-flex flex-column">
+                            <div class="mb-4">
+                                <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" class="rounded-circle mb-3" width="100" alt="Student">
+                                <h4 class="fw-bold mb-3">Already Enrolled?</h4>
+                                <p>Access your courses and continue learning</p>
+                            </div>
+                            <a href="#login" class="btn btn-outline-secondary w-100 mt-auto py-2">Login to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructor Section -->
+    <section class="py-5" id="instructor">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="instructor-img" alt="Instructor">
+                </div>
+                <div class="col-lg-7">
+                    <h2 class="fw-bold mb-4">Your Expert Instructor</h2>
+                    <p class="lead">Hi, I'm Alex Johnson, your guide through these courses.</p>
+                         <p>With over 10 years of hands-on experience in web development, cybersecurity, and financial markets, I've helped thousands of students acquire valuable, real-world skills.</p>
+                    <p>My teaching approach focuses on practical applications rather than just theory. You'll learn exactly what you need to know to succeed in these fields.</p>
+                    
+                    <div class="mt-4">
+                        <h5 class="fw-bold mb-3">My Credentials:</h5>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="badge bg-primary bg-opacity-10 text-primary py-2 px-3">Full-Stack Developer</span>
+                            <span class="badge bg-danger bg-opacity-10 text-danger py-2 px-3">Certified Ethical Hacker</span>
+                            <span class="badge bg-info bg-opacity-10 text-info py-2 px-3">Professional Trader</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h5 class="fw-bold mb-3">Connect With Me:</h5>
+                        <a href="#" class="btn btn-outline-secondary btn-sm me-2 mb-2"><i class="fab fa-youtube me-1"></i> YouTube</a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm me-2 mb-2"><i class="fab fa-twitter me-1"></i> Twitter</a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm me-2 mb-2"><i class="fab fa-linkedin me-1"></i> LinkedIn</a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm mb-2"><i class="fab fa-instagram me-1"></i> Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">What Our Students Say</h2>
+                <p class="text-muted">Real results from our community</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" class="testimonial-img me-3" alt="Student">
+                                <div>
+                                    <h5 class="mb-0">Sarah K.</h5>
+                                    <small class="text-muted">Web Development Student</small>
+                                </div>
+                            </div>
+                            <p class="mb-0">"The web development course was exactly what I needed to transition into tech. I built my portfolio and landed a junior developer role in 3 months!"</p>
+                            <div class="text-warning mt-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" class="testimonial-img me-3" alt="Student">
+                                <div>
+                                    <h5 class="mb-0">Michael T.</h5>
+                                    <small class="text-muted">Cybersecurity Student</small>
+                                </div>
+                            </div>
+                            <p class="mb-0">"The cybersecurity demonstrations were eye-opening. I've completely changed how I manage my online security and even helped my family stay safe."</p>
+                            <div class="text-warning mt-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" class="testimonial-img me-3" alt="Student">
+                                <div>
+                                    <h5 class="mb-0">Priya M.</h5>
+                                    <small class="text-muted">Financial Trading Student</small>
+                                </div>
+                            </div>
+                            <p class="mb-0">"The trading strategies helped me turn my small investment into consistent profits. The technical analysis lessons alone were worth the price!"</p>
+                            <div class="text-warning mt-3">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Section -->
+    <section class="py-5" id="login">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="login-card card border-0">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <img src="https://images.unsplash.com/photo-1571260898878-8c9df49c5a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" class="rounded-circle mb-3" width="80" alt="Login">
+                                <h2 class="fw-bold mb-1">Student Login</h2>
+                                <p class="text-muted">Access your course dashboard</p>
+                            </div>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="email" placeholder="your@email.com" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="remember">
+                                        <label class="form-check-label" for="remember">Remember me</label>
+                                    </div>
+                                    <a href="#" class="text-primary">Forgot password?</a>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 py-2 mb-3">Login to Dashboard</button>
+                                <p class="text-center mb-0">Don't have an account? <a href="#pricing" class="text-primary fw-medium">Enroll now</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+                    </h5>
+                    <p class="mb-4">Premium online courses to help you master in-demand digital skills and transform your career.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Courses</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Development</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Cybersecurity</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Financial Trading</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">All Courses</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Testimonials</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Stay Updated</h5>
+                    <p class="text-white-50 mb-3">Subscribe to our newsletter for course updates and offers.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white-50">&copy; 2023 SkillCraft. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
