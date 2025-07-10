@@ -482,9 +482,9 @@
                     }
 
                     // Check if user has any courses
-                    if (userData.courses && userData.courses.length > 0) {
+                    if (userData.course && userData.course.length > 0) {
                         // Create course cards for each purchased course
-                        userData.courses.forEach(courseId => {
+                        userData.course.forEach(courseId => {
                             const courseCard = createCourseCard(courseId, userData[`progress_${courseId}`] || 0);
                             if (courseCard && courseContainer) {
                                 courseContainer.appendChild(courseCard);
@@ -492,16 +492,16 @@
                         });
                     } else {
                         // Show message if no courses purchased
-                        const noCoursesMsg = document.createElement('div');
-                        noCoursesMsg.className = 'col-12 text-center py-4';
-                        noCoursesMsg.innerHTML = `
+                        const noCourseMsg = document.createElement('div');
+                        noCourseMsg.className = 'col-12 text-center py-4';
+                        noCourseMsg.innerHTML = `
                             <div class="alert alert-info">
                                 <i class="fas fa-book me-2"></i> You haven't purchased any courses yet.
                                 <a href="gig7h.html#courses" class="alert-link">Browse courses</a>
                             </div>
                         `;
                         if (courseContainer) {
-                            courseContainer.appendChild(noCoursesMsg);
+                            courseContainer.appendChild(noCourseMsg);
                         }
                     }
                 }
@@ -669,8 +669,8 @@
                 document.getElementById(tabId).classList.add('active');
                 
                 // Load courses if courses tab is clicked
-                if (tabId === 'coursesTab') {
-                    loadUserCourses();
+                if (tabId === 'courseTab') {
+                    loadUserCourse();
                 }
             });
         });
