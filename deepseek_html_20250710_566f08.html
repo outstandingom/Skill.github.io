@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillCraft - My Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --secondary: #3a0ca3;
+            --danger: #f72585;
+            --danger-light: #ffebf2;
+            --info: #4cc9f0;
+            --info-light: #e6f9ff;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .profile-nav {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .profile-nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .profile-nav-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .profile-nav-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: var(--primary-light);
+        }
+        
+        .profile-detail {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-detail-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .profile-detail-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .course-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .course-img {
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .web-dev {
+            border-top: 4px solid var(--primary);
+        }
+        
+        .cyber {
+            border-top: 4px solid var(--danger);
+        }
+        
+        .finance {
+            border-top: 4px solid var(--info);
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Course Content Styles */
+        .course-header {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .lessons-sidebar {
+            position: sticky;
+            top: 20px;
+        }
+        
+        .lesson-link.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .lesson-section {
+            display: none;
+        }
+        
+        .lesson-section.active {
+            display: block;
+        }
+        
+        /* YouTube embed styling to prevent recommendations */
+        .lesson-content iframe {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .back-to-courses-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-courses-btn:hover {
+            transform: translateX(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="gig7h.html#courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gig7h.html#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gig7h.html#instructor">Instructor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <button id="logoutBtn" class="btn btn-outline-danger ms-lg-3 px-4">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="container text-center">
+            <img id="profileImage" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Profile" class="profile-image mb-3">
+            <h2 id="profileName" class="fw-bold mb-2">User Name</h2>
+            <p id="profileEmail" class="mb-0">user@example.com</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Profile Navigation -->
+                <div class="profile-nav">
+                    <div class="profile-nav-item active" data-tab="profile">Profile</div>
+                    <div class="profile-nav-item" data-tab="courses">My Courses</div>
+                    <div class="profile-nav-item" data-tab="settings">Settings</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <!-- Profile Tab -->
+                <div id="profileTab" class="tab-content active">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Personal Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Full Name</div>
+                                    <div id="profileFullName" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Email</div>
+                                    <div id="profileEmailDetail" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Member Since</div>
+                                    <div id="profileJoinDate" class="profile-detail-value">Unknown</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">User ID</div>
+                                    <div id="profileUserId" class="profile-detail-value">Loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fas fa-edit me-2"></i>Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Security</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-shield-alt me-2"></i> Last login: <span id="lastLogin">Unknown</span>
+                        </div>
+                        
+                        <div class="d-flex gap-3">
+                            <button id="changePasswordBtn" class="btn btn-outline-danger">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fas fa-envelope me-2"></i>Update Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Courses Tab -->
+                <div id="coursesTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">My Courses</h4>
+                        <p class="text-muted mb-4">Your enrolled courses and progress</p>
+                        
+                        <div class="row g-4">
+                            <!-- Courses will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Settings</h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Notifications</h5>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="courseUpdates" checked>
+                                <label class="form-check-label" for="courseUpdates">Course Updates</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="promotionalOffers">
+                                <label class="form-check-label" for="promotionalOffers">Promotional Offers</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Privacy Settings</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePublic" checked>
+                                <label class="form-check-label" for="profilePublic">Public Profile</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePrivate">
+                                <label class="form-check-label" for="profilePrivate">Private Profile</label>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-danger">
+                            <h5 class="fw-bold mb-2">Danger Zone</h5>
+                            <p class="mb-3">These actions are irreversible. Proceed with caution.</p>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web Development Course Content -->
+    <div id="webCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Web Development</h2>
+                        <p class="text-muted mb-0">Master HTML, CSS, JavaScript and modern frameworks</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="webProgressBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted" id="webProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: HTML Fundamentals</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: CSS Styling</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: JavaScript Basics</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Responsive Design</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: DOM Manipulation</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Introduction to Frameworks</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Final Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">HTML Fundamentals</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages.</p>
+                                <ul>
+                                    <li>HTML describes the structure of a web page</li>
+                                    <li>HTML consists of a series of elements</li>
+                                    <li>HTML elements tell the browser how to display the content</li>
+                                    <li>HTML elements are represented by tags</li>
+                                </ul>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Always include the DOCTYPE declaration at the beginning of your HTML documents.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 2 Content -->
+                        <div class="lesson-section" data-lesson="2">
+                            <h3 class="fw-bold mb-3">CSS Styling</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>CSS (Cascading Style Sheets) is used to style and layout web pages.</p>
+                                <ul>
+                                    <li>CSS describes how HTML elements should be displayed</li>
+                                    <li>CSS saves a lot of work by controlling multiple web pages at once</li>
+                                    <li>External stylesheets are stored in CSS files</li>
+                                </ul>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Use external stylesheets for better maintainability.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 3 Content -->
+                        <div class="lesson-section" data-lesson="3">
+                            <h3 class="fw-bold mb-3">JavaScript Basics</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>JavaScript is a programming language that adds interactivity to your website.</p>
+                                <ul>
+                                    <li>JavaScript can change HTML content</li>
+                                    <li>JavaScript can change HTML attributes</li>
+                                    <li>JavaScript can change CSS styles</li>
+                                    <li>JavaScript can validate data</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 4 Content -->
+                        <div class="lesson-section" data-lesson="4">
+                            <h3 class="fw-bold mb-3">Responsive Design</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Responsive web design makes your web page look good on all devices.</p>
+                                <ul>
+                                    <li>Use responsive meta tag in HTML</li>
+                                    <li>Use media queries in CSS</li>
+                                    <li>Use flexible grid layouts</li>
+                                    <li>Use responsive images</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 5 Content -->
+                        <div class="lesson-section" data-lesson="5">
+                            <h3 class="fw-bold mb-3">DOM Manipulation</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>The Document Object Model (DOM) is a programming interface for web documents.</p>
+                                <ul>
+                                    <li>The DOM represents the document as nodes and objects</li>
+                                    <li>JavaScript can manipulate the DOM</li>
+                                    <li>DOM methods allow programmatic access to the tree</li>
+                                    <li>DOM events allow handling user interactions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 6 Content -->
+                        <div class="lesson-section" data-lesson="6">
+                            <h3 class="fw-bold mb-3">Introduction to Frameworks</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>JavaScript frameworks are collections of JavaScript code libraries that provide developers with pre-written code for routine tasks.</p>
+                                <ul>
+                                    <li>React - A library for building user interfaces</li>
+                                    <li>Angular - A platform for building mobile and desktop web applications</li>
+                                    <li>Vue - A progressive framework for building user interfaces</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 7 Content -->
+                        <div class="lesson-section" data-lesson="7">
+                            <h3 class="fw-bold mb-3">Final Project</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>In this final project, you'll combine all the skills you've learned to build a complete web application.</p>
+                                <ul>
+                                    <li>Create a responsive layout</li>
+                                    <li>Implement interactive features with JavaScript</li>
+                                    <li>Use a framework of your choice</li>
+                                    <li>Deploy your application</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-primary prev-lesson-btn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous Lesson
+                        </button>
+                        <button class="btn btn-primary next-lesson-btn">
+                            Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cyber Security Course Content -->
+    <div id="cyberCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4" style="border-left-color: var(--danger);">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Cyber Security</h2>
+                        <p class="text-muted mb-0">Learn to protect systems from digital attacks</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="cyberProgressBar" style="width: 0%; background-color: var(--danger);"></div>
+                        </div>
+                        <small class="text-muted" id="cyberProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: Security Basics</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: Network Security</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: Encryption</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Ethical Hacking</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: Malware Analysis</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Security Policies</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Final Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">Security Basics</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks.</p>
+                                <ul>
+                                    <li>Understand the CIA triad (Confidentiality, Integrity, Availability)</li>
+                                    <li>Learn about common threats and vulnerabilities</li>
+                                    <li>Explore security principles and best practices</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Add similar sections for lessons 2-7 -->
+                        
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-danger prev-lesson-btn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous Lesson
+                        </button>
+                        <button class="btn btn-danger next-lesson-btn">
+                            Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Trading Course Content -->
+    <div id="financeCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4" style="border-left-color: var(--info);">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Financial Trading</h2>
+                        <p class="text-muted mb-0">Master the art of trading in financial markets</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="financeProgressBar" style="width: 0%; background-color: var(--info);"></div>
+                        </div>
+                        <small class="text-muted" id="financeProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: Market Basics</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: Technical Analysis</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: Fundamental Analysis</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Trading Strategies</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: Risk Management</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Trading Psychology</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Final Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">Market Basics</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Financial markets are where traders buy and sell assets such as stocks, bonds, currencies, and commodities.</p>
+                                <ul>
+                                    <li>Understand different types of markets</li>
+                                    <li>Learn about market participants</li>
+                                    <li>Explore order types and execution</li>
+                                    <li>Understand market indicators</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Add similar sections for lessons 2-7 -->
+                        
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-info prev-lesson-btn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous Lesson
+                        </button>
+                        <button class="btn btn-info text-white next-lesson-btn">
+                            Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="editFullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="editFullName" placeholder="Your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhoto" class="form-label">Profile Photo</label>
+                            <input type="file" class="form-control" id="editPhoto">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="editPhone" placeholder="+1 (123) 456-7890">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="editProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+                    </h5>
+                    <p class="mb-4">Premium online courses to help you master in-demand digital skills and transform your career.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Courses</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Development</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Cybersecurity</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Financial Trading</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">All Courses</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Testimonials</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Stay Updated</h5>
+                    <p class="text-white-50 mb-3">Subscribe to our newsletter for course updates and offers.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white-50">&copy; 2023 SkillCraft. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- Your Profile JS -->
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
+            authDomain: "skill-craft-79597.firebaseapp.com",
+            projectId: "skill-craft-79597",
+            storageBucket: "skill-craft-79597.firebasestorage.app",
+            messagingSenderId: "916636695046",
+            appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
+            measurementId: "G-3MM50DH5SY"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Initialize modal and form elements
+        const editProfileModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+        const editProfileForm = document.querySelector('#editProfileModal form');
+        const editFullNameInput = document.getElementById('editFullName');
+        const editPhoneInput = document.getElementById('editPhone');
+        const editPhotoInput = document.getElementById('editPhoto');
+        const saveChangesBtn = document.getElementById('editProfileBtn');
+
+        // Current user data
+        let currentUser = null;
+        let currentUserData = null;
+
+        // Function to load user's courses
+        async function loadUserCourses() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    const coursesTab = document.getElementById('coursesTab');
+                    
+                    // Clear existing course cards (except the header)
+                    const courseContainer = coursesTab.querySelector('.row.g-4');
+                    if (courseContainer) {
+                        courseContainer.innerHTML = '';
+                    }
+
+                    // Check if user has any courses
+                    if (userData.courses && userData.courses.length > 0) {
+                        // Create course cards for each purchased course
+                        userData.courses.forEach(courseId => {
+                            const courseCard = createCourseCard(courseId, userData[`progress_${courseId}`] || 0);
+                            if (courseCard && courseContainer) {
+                                courseContainer.appendChild(courseCard);
+                            }
+                        });
+                    } else {
+                        // Show message if no courses purchased
+                        const noCoursesMsg = document.createElement('div');
+                        noCoursesMsg.className = 'col-12 text-center py-4';
+                        noCoursesMsg.innerHTML = `
+                            <div class="alert alert-info">
+                                <i class="fas fa-book me-2"></i> You haven't purchased any courses yet.
+                                <a href="gig7h.html#courses" class="alert-link">Browse courses</a>
+                            </div>
+                        `;
+                        if (courseContainer) {
+                            courseContainer.appendChild(noCoursesMsg);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading user courses:", error);
+            }
+        }
+
+        // Helper function to create course cards
+        function createCourseCard(courseId, progress = 0) {
+            const courseData = {
+                'course1': {
+                    title: 'Web Development',
+                    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                    category: 'web-dev',
+                    btnClass: 'btn-primary'
+                },
+                'course2': {
+                    title: 'Cybersecurity',
+                    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                    category: 'cyber',
+                    btnClass: 'btn-danger'
+                },
+                'course3': {
+                    title: 'Financial Trading',
+                    image: 'https://images.unsplash.com/photo-1468254095679-bbcba94a7066?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                    category: 'finance',
+                    btnClass: 'btn-info text-white'
+                }
+            };
+
+            const course = courseData[courseId];
+            if (!course) return null;
+
+            // Determine status based on progress
+            let status = 'Not Started';
+            let statusClass = 'bg-secondary bg-opacity-10 text-secondary';
+            
+            if (progress > 0 && progress < 100) {
+                status = 'In Progress';
+                statusClass = 'bg-primary bg-opacity-10 text-primary';
+            } else if (progress >= 100) {
+                status = 'Completed';
+                statusClass = 'bg-success bg-opacity-10 text-success';
+            }
+
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col-md-6';
+            colDiv.innerHTML = `
+                <div class="course-card ${course.category} h-100">
+                    <img src="${course.image}" class="course-img w-100" alt="${course.title}">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-3">${course.title}</h4>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Progress</small>
+                                <small>${progress}%</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge ${statusClass}">${status}</span>
+                            <button class="btn btn-sm ${course.btnClass} view-course-btn">
+                                ${progress > 0 ? 'Continue' : 'Start Now'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return colDiv;
+        }
+
+        // Function to open edit profile modal with current data
+        function openEditProfileModal() {
+            if (!currentUser) return;
+            
+            // Fill form with current data
+            editFullNameInput.value = currentUserData?.fullName || currentUser.displayName || '';
+            editPhoneInput.value = currentUserData?.phone || '';
+            
+            // Show the modal
+            editProfileModal.show();
+        }
+
+        // Handle profile update
+        saveChangesBtn.addEventListener('click', async function() {
+            if (!currentUser) return;
+            
+            const newFullName = editFullNameInput.value.trim();
+            const newPhone = editPhoneInput.value.trim();
+            const newPhotoFile = editPhotoInput.files[0];
+            
+            try {
+                // Show loading state
+                saveChangesBtn.disabled = true;
+                saveChangesBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+                
+                // Update data object
+                const updates = {
+                    fullName: newFullName,
+                    phone: newPhone,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Handle photo upload if a new file was selected
+                if (newPhotoFile) {
+                    const storageRef = storage.ref(`profile_images/${currentUser.uid}`);
+                    const uploadTask = storageRef.put(newPhotoFile);
+                    
+                    // Wait for upload to complete
+                    const snapshot = await uploadTask;
+                    const photoURL = await snapshot.ref.getDownloadURL();
+                    
+                    // Add photoURL to updates
+                    updates.photoURL = photoURL;
+                    
+                    // Update auth profile photo
+                    await currentUser.updateProfile({
+                        photoURL: photoURL
+                    });
+                }
+                
+                // Update Firestore
+                await db.collection('users').doc(currentUser.uid).set(updates, { merge: true });
+                
+                // Update UI
+                updateProfileUI(currentUser, { ...currentUserData, ...updates });
+                
+                // Close modal
+                editProfileModal.hide();
+                
+                // Show success message
+                alert('Profile updated successfully!');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile. Please try again.');
+            } finally {
+                // Reset button state
+                saveChangesBtn.disabled = false;
+                saveChangesBtn.textContent = 'Save Changes';
+            }
+        });
+
+        // Tab switching functionality
+        document.querySelectorAll('.profile-nav-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.profile-nav-item').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                    content.style.display = 'none';
+                });
+                
+                // Show the corresponding tab content
+                const tabId = this.getAttribute('data-tab') + 'Tab';
+                document.getElementById(tabId).style.display = 'block';
+                document.getElementById(tabId).classList.add('active');
+                
+                // Load courses if courses tab is clicked
+                if (tabId === 'coursesTab') {
+                    loadUserCourses();
+                }
+            });
+        });
+
+        // Handle course card clicks
+        document.addEventListener('click', function(e) {
+            // Check if a course card was clicked
+            if (e.target.closest('.course-card') || e.target.closest('.view-course-btn')) {
+                e.preventDefault();
+                const courseCard = e.target.closest('.course-card');
+                const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
+                                 courseCard.classList.contains('cyber') ? 'cyber' : 'finance';
+                
+                // Hide all tabs and show the selected course content
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.style.display = 'none';
+                    tab.classList.remove('active');
+                });
+                document.getElementById(`${courseId}CourseContent`).style.display = 'block';
+                document.getElementById(`${courseId}CourseContent`).classList.add('active');
+                
+                // Update progress display
+                updateCourseProgress(courseId);
+            }
+            
+            // Back to courses button
+            if (e.target.closest('.back-to-courses-btn')) {
+                e.preventDefault();
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.style.display = 'none';
+                    tab.classList.remove('active');
+                });
+                document.getElementById('coursesTab').style.display = 'block';
+                document.getElementById('coursesTab').classList.add('active');
+                
+                // Update navigation tab
+                document.querySelectorAll('.profile-nav-item').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector('.profile-nav-item[data-tab="courses"]').classList.add('active');
+            }
+            
+            // Lesson navigation
+            if (e.target.closest('.lesson-link')) {
+                e.preventDefault();
+                const lessonLink = e.target.closest('.lesson-link');
+                const lessonNumber = lessonLink.dataset.lesson;
+                
+                // Update active lesson in sidebar
+                document.querySelectorAll('.lesson-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                lessonLink.classList.add('active');
+                
+                // Show corresponding lesson content
+                document.querySelectorAll('.lesson-section').forEach(section => {
+                    section.style.display = 'none';
+                });
+                document.querySelector(`.lesson-section[data-lesson="${lessonNumber}"]`).style.display = 'block';
+                
+                // Update navigation buttons
+                updateLessonNavigation(lessonNumber);
+            }
+            
+            // Previous/Next lesson buttons
+            if (e.target.closest('.prev-lesson-btn') && !e.target.closest('.prev-lesson-btn').disabled) {
+                e.preventDefault();
+                const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
+                document.querySelector(`.lesson-link[data-lesson="${parseInt(currentLesson) - 1}"]`).click();
+            }
+            
+            if (e.target.closest('.next-lesson-btn') && e.target.closest('.next-lesson-btn').textContent.includes('Next')) {
+                e.preventDefault();
+                const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
+                document.querySelector(`.lesson-link[data-lesson="${parseInt(currentLesson) + 1}"]`).click();
+            }
+        });
+
+        function updateCourseProgress(courseId) {
+            const user = auth.currentUser;
+            if (!user) return;
+            
+            db.collection('users').doc(user.uid).get().then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const progressKey = `progress_${courseId === 'web' ? 'course1' : courseId === 'cyber' ? 'course2' : 'course3'}`;
+                    const progress = userData[progressKey] || 0;
+                    
+                    // Update progress bar
+                    const progressBar = document.getElementById(`${courseId}ProgressBar`);
+                    const progressText = document.getElementById(`${courseId}ProgressText`);
+                    if (progressBar && progressText) {
+                        progressBar.style.width = `${progress}%`;
+                        progressText.textContent = `${progress}% Complete`;
+                    }
+                }
+            });
+        }
+
+        function updateLessonNavigation(currentLesson) {
+            const current = parseInt(currentLesson);
+            const prevBtn = document.querySelector('.prev-lesson-btn');
+            const nextBtn = document.querySelector('.next-lesson-btn');
+            
+            // Update previous button
+            if (current === 1) {
+                prevBtn.disabled = true;
+            } else {
+                prevBtn.disabled = false;
+            }
+            
+            // Update next button
+            if (current === 7) {
+                nextBtn.textContent = 'Complete Course';
+            } else {
+                nextBtn.textContent = 'Next Lesson';
+            }
+        }
+
+        function markLessonComplete(lessonNumber) {
+            // Implement logic to mark lesson as complete and update progress
+            // This would update Firestore with the user's progress
+            console.log(`Marking lesson ${lessonNumber} as complete`);
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Logout error:', error);
+                alert('Error during logout. Please try again.');
+            });
+        });
+
+        // Password reset functionality
+        document.getElementById('changePasswordBtn').addEventListener('click', function() {
+            const user = auth.currentUser;
+            if (!user || !user.email) {
+                alert('User not authenticated. Please log in again.');
+                return;
+            }
+            
+            auth.sendPasswordResetEmail(user.email).then(() => {
+                alert('Password reset email sent. Please check your inbox.');
+            }).catch((error) => {
+                console.error('Password reset error:', error);
+                alert('Error sending password reset email. Please try again.');
+            });
+        });
+
+        // Update UI with user data
+        function updateProfileUI(user, userData) {
+            // Basic profile info
+            document.getElementById('profileName').textContent = 
+                userData?.fullName || user.displayName || 'User';
+            
+            document.getElementById('profileEmail').textContent = 
+                user.email || 'No email';
+            
+            document.getElementById('profileFullName').textContent = 
+                userData?.fullName || user.displayName || 'Not provided';
+            
+            document.getElementById('profileEmailDetail').textContent = 
+                user.email || 'Not provided';
+            
+            // Profile image (uses auth photoURL if available)
+            if (user.photoURL) {
+                document.getElementById('profileImage').src = user.photoURL;
+            } else if (userData?.photoURL) {
+                document.getElementById('profileImage').src = userData.photoURL;
+            }
+            
+            // Account creation date
+            if (userData?.createdAt) {
+                const joinDate = userData.createdAt.toDate();
+                document.getElementById('profileJoinDate').textContent = 
+                    joinDate.toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+            } else if (user.metadata.creationTime) {
+                const joinDate = new Date(user.metadata.creationTime);
+                document.getElementById('profileJoinDate').textContent = 
+                    joinDate.toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+            } else {
+                document.getElementById('profileJoinDate').textContent = 'Unknown';
+            }
+            
+            // Phone number (if available in Firestore)
+            if (userData?.phone) {
+                // Create phone element if doesn't exist
+                if (!document.getElementById('profilePhone')) {
+                    const phoneContainer = document.createElement('div');
+                    phoneContainer.className = 'profile-detail';
+                    phoneContainer.innerHTML = `
+                        <div class="profile-detail-label">Phone</div>
+                        <div class="profile-detail-value" id="profilePhone"></div>
+                    `;
+                    document.querySelector('.profile-card .row').appendChild(phoneContainer);
+                }
+                document.getElementById('profilePhone').textContent = userData.phone;
+            }
+        }
+
+        // Load user data when authentication state changes
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                
+                // Update user ID
+                document.getElementById('profileUserId').textContent = user.uid.substring(0, 8) + '...';
+                
+                // Update last login time
+                if (user.metadata.lastSignInTime) {
+                    const lastLogin = new Date(user.metadata.lastSignInTime);
+                    document.getElementById('lastLogin').textContent = 
+                        lastLogin.toLocaleString('en-US', {
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                }
+                
+                // Fetch additional user data from Firestore
+                db.collection('users').doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        currentUserData = userData;
+                        updateProfileUI(user, userData);
+                    } else {
+                        console.log("No user data found in Firestore");
+                        currentUserData = null;
+                        updateProfileUI(user, null);
+                    }
+                }).catch((error) => {
+                    console.error("Error getting user document:", error);
+                    currentUserData = null;
+                    updateProfileUI(user, null);
+                });
+            } else {
+                currentUser = null;
+                currentUserData = null;
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
