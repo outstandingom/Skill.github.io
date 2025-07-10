@@ -208,50 +208,51 @@
         const progressBar = document.getElementById('progressBar');
 
         // Initialize the application
-        function initApp() {
-            // Check auth state
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    // User is signed in, check course access
-                    try {
-                        const userDoc = await db.collection('users').doc(user.uid).get();
-                        
-                        if (userDoc.exists) {
-                            const userData = userDoc.data();
-                            
-                            // Check if user has the required course
-                            if (!userData.courses || !userData.courses.includes(course1)) {
-                                // Redirect to index.html if user doesn't have access
-                                window.location.href = 'index.html';
-                                return;
-                            }
-                            
-                            // If we get here, user has access - load the course
-                            loadCourseContent();
-                        } else {
-                            // User document doesn't exist - redirect
-                            window.location.href = 'index.html';
-                        }
-                    } catch (error) {
-                        console.error("Error checking course access:", error);
+        // Initialize the application
+function initApp() {
+    // Check auth state
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            // User is signed in, check course access
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    
+                    // Check if user has the required course (changed to check field existence)
+                    if (!userData.course1) {  // Changed from checking array to checking field
+                        // Redirect to index.html if user doesn't have access
                         window.location.href = 'index.html';
+                        return;
                     }
+                    
+                    // If we get here, user has access - load the course
+                    loadCourseContent();
                 } else {
-                    // No user is signed in, redirect to login
-                    window.location.href = 'login.html';
+                    // User document doesn't exist - redirect
+                    window.location.href = 'index.html';
                 }
-            });
-
-            // Logout button
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    window.location.href = 'login.html';
-                }).catch((error) => {
-                    console.error('Logout error:', error);
-                    alert('Error during logout. Please try again.');
-                });
-            });
+            } catch (error) {
+                console.error("Error checking course access:", error);
+                window.location.href = 'index.html';
+            }
+        } else {
+            // No user is signed in, redirect to login
+            window.location.href = 'login.html';
         }
+    });
+
+    // Logout button
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        auth.signOut().then(() => {
+            window.location.href = 'login.html';
+        }).catch((error) => {
+            console.error('Logout error:', error);
+            alert('Error during logout. Please try again.');
+        });
+    });
+    }
 
         // Load course content
         function loadCourseContent() {
