@@ -220,7 +220,7 @@
                             const userData = userDoc.data();
                             
                             // Check if user has the required course
-                            if (!userData.courses || !userData.courses.includes(requiredCourse1)) {
+                            if (!userData.courses || !userData.courses.includes(course1)) {
                                 // Redirect to index.html if user doesn't have access
                                 window.location.href = 'index.html';
                                 return;
