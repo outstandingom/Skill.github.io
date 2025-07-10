@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillCraft - My Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --secondary: #3a0ca3;
+            --danger: #f72585;
+            --danger-light: #ffebf2;
+            --info: #4cc9f0;
+            --info-light: #e6f9ff;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .profile-nav {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .profile-nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .profile-nav-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .profile-nav-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: var(--primary-light);
+        }
+        
+        .profile-detail {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-detail-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .profile-detail-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .course-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .course-img {
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .web-dev {
+            border-top: 4px solid var(--primary);
+        }
+        
+        .cyber {
+            border-top: 4px solid var(--danger);
+        }
+        
+        .finance {
+            border-top: 4px solid var(--info);
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="gig7h.html#courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gig7h.html#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gig7h.html#instructor">Instructor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <button id="logoutBtn" class="btn btn-outline-danger ms-lg-3 px-4">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="container text-center">
+            <img id="profileImage" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" alt="Profile" class="profile-image mb-3">
+            <h2 id="profileName" class="fw-bold mb-2">User Name</h2>
+            <p id="profileEmail" class="mb-0">user@example.com</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Profile Navigation -->
+                <div class="profile-nav">
+                    <div class="profile-nav-item active" data-tab="profile">Profile</div>
+                    <div class="profile-nav-item" data-tab="courses">My Courses</div>
+                    <div class="profile-nav-item" data-tab="settings">Settings</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <!-- Profile Tab -->
+                <div id="profileTab" class="tab-content active">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Personal Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Full Name</div>
+                                    <div id="profileFullName" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Email</div>
+                                    <div id="profileEmailDetail" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Member Since</div>
+                                    <div id="profileJoinDate" class="profile-detail-value">Unknown</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">User ID</div>
+                                    <div id="profileUserId" class="profile-detail-value">Loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fas fa-edit me-2"></i>Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Security</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-shield-alt me-2"></i> Last login: <span id="lastLogin">Unknown</span>
+                        </div>
+                        
+                        <div class="d-flex gap-3">
+                            <button id="changePasswordBtn" class="btn btn-outline-danger">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fas fa-envelope me-2"></i>Update Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Courses Tab -->
+                <div id="coursesTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">My Courses</h4>
+                        <p class="text-muted mb-4">Your enrolled courses and progress</p>
+                        
+                        <div class="row g-4">
+                            <!-- Courses will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Settings</h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Notifications</h5>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="courseUpdates" checked>
+                                <label class="form-check-label" for="courseUpdates">Course Updates</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="promotionalOffers">
+                                <label class="form-check-label" for="promotionalOffers">Promotional Offers</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Privacy Settings</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePublic" checked>
+                                <label class="form-check-label" for="profilePublic">Public Profile</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePrivate">
+                                <label class="form-check-label" for="profilePrivate">Private Profile</label>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-danger">
+                            <h5 class="fw-bold mb-2">Danger Zone</h5>
+                            <p class="mb-3">These actions are irreversible. Proceed with caution.</p>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="editFullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="editFullName" placeholder="Your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhoto" class="form-label">Profile Photo</label>
+                            <input type="file" class="form-control" id="editPhoto">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="editPhone" placeholder="+1 (123) 456-7890">
+                        </div>
+                    </form>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="editProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+                    </h5>
+                    <p class="mb-4">Premium online courses to help you master in-demand digital skills and transform your career.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Courses</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Development</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Cybersecurity</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Financial Trading</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">All Courses</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Testimonials</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Stay Updated</h5>
+                    <p class="text-white-50 mb-3">Subscribe to our newsletter for course updates and offers.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white-50">&copy; 2023 SkillCraft. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- Your Profile JS -->
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
+            authDomain: "skill-craft-79597.firebaseapp.com",
+            projectId: "skill-craft-79597",
+            storageBucket: "skill-craft-79597.firebasestorage.app",
+            messagingSenderId: "916636695046",
+            appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
+            measurementId: "G-3MM50DH5SY"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Initialize modal and form elements
+        const editProfileModal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+        const editProfileForm = document.querySelector('#editProfileModal form');
+        const editFullNameInput = document.getElementById('editFullName');
+        const editPhoneInput = document.getElementById('editPhone');
+        const editPhotoInput = document.getElementById('editPhoto');
+        const saveChangesBtn = document.getElementById('editProfileBtn');
+
+        // Current user data
+        let currentUser = null;
+        let currentUserData = null;
+
+        // Function to load user's courses
+        async function loadUserCourses() {
+            const user = auth.currentUser;
+            if (!user) return;
+
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    const coursesTab = document.getElementById('coursesTab');
+                    
+                    // Clear existing course cards (except the header)
+                    const courseContainer = coursesTab.querySelector('.row.g-4');
+                    if (courseContainer) {
+                        courseContainer.innerHTML = '';
+                    }
+
+                    // Check if user has any courses
+                    if (userData.courses && userData.courses.length > 0) {
+                        // Create course cards for each purchased course
+                        userData.courses.forEach(courseId => {
+                            const courseCard = createCourseCard(courseId, userData[`progress_${courseId}`] || 0);
+                            if (courseCard && courseContainer) {
+                                courseContainer.appendChild(courseCard);
+                            }
+                        });
+                    } else {
+                        // Show message if no courses purchased
+                        const noCoursesMsg = document.createElement('div');
+                        noCoursesMsg.className = 'col-12 text-center py-4';
+                        noCoursesMsg.innerHTML = `
+                            <div class="alert alert-info">
+                                <i class="fas fa-book me-2"></i> You haven't purchased any courses yet.
+                                <a href="gig7h.html#courses" class="alert-link">Browse courses</a>
+                            </div>
+                        `;
+                        if (courseContainer) {
+                            courseContainer.appendChild(noCoursesMsg);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading user courses:", error);
+            }
+        }
+
+        // Helper function to create course cards
+        function createCourseCard(courseId, progress = 0) {
+            const courseData = {
+                'course1': {
+                    title: 'Web Development',
+                    image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                    category: 'web-dev',
+                    link: 'web.html',
+                    btnClass: 'btn-primary'
+                },
+                'course2': {
+                    title: 'Cybersecurity',
+                    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                    category: 'cyber',
+                    link: 'cyber.html',
+                    btnClass: 'btn-danger'
+                },
+                'course3': {
+                    title: 'Financial Trading',
+                    image: 'https://images.unsplash.com/photo-1468254095679-bbcba94a7066?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
+                    category: 'finance',
+                    link: 'finance.html',
+                    btnClass: 'btn-info text-white'
+                }
+            };
+
+            const course = courseData[courseId];
+            if (!course) return null;
+
+            // Determine status based on progress
+            let status = 'Not Started';
+            let statusClass = 'bg-secondary bg-opacity-10 text-secondary';
+            
+            if (progress > 0 && progress < 100) {
+                status = 'In Progress';
+                statusClass = 'bg-primary bg-opacity-10 text-primary';
+            } else if (progress >= 100) {
+                status = 'Completed';
+                statusClass = 'bg-success bg-opacity-10 text-success';
+            }
+
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col-md-6';
+            colDiv.innerHTML = `
+                <div class="course-card ${course.category} h-100">
+                    <img src="${course.image}" class="course-img w-100" alt="${course.title}">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold mb-3">${course.title}</h4>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small>Progress</small>
+                                <small>${progress}%</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge ${statusClass}">${status}</span>
+                            <a href="${course.link}" class="btn btn-sm ${course.btnClass}">
+                                ${progress > 0 ? 'Continue' : 'Start Now'}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            return colDiv;
+        }
+
+        // Function to open edit profile modal with current data
+        function openEditProfileModal() {
+            if (!currentUser) return;
+            
+            // Fill form with current data
+            editFullNameInput.value = currentUserData?.fullName || currentUser.displayName || '';
+            editPhoneInput.value = currentUserData?.phone || '';
+            
+            // Show the modal
+            editProfileModal.show();
+        }
+
+        // Handle profile update
+        saveChangesBtn.addEventListener('click', async function() {
+            if (!currentUser) return;
+            
+            const newFullName = editFullNameInput.value.trim();
+            const newPhone = editPhoneInput.value.trim();
+            const newPhotoFile = editPhotoInput.files[0];
+            
+            try {
+                // Show loading state
+                saveChangesBtn.disabled = true;
+                saveChangesBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+                
+                // Update data object
+                const updates = {
+                    fullName: newFullName,
+                    phone: newPhone,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                // Handle photo upload if a new file was selected
+                if (newPhotoFile) {
+                    const storageRef = storage.ref(`profile_images/${currentUser.uid}`);
+                    const uploadTask = storageRef.put(newPhotoFile);
+                    
+                    // Wait for upload to complete
+                    const snapshot = await uploadTask;
+                    const photoURL = await snapshot.ref.getDownloadURL();
+                    
+                    // Add photoURL to updates
+                    updates.photoURL = photoURL;
+                    
+                    // Update auth profile photo
+                    await currentUser.updateProfile({
+                        photoURL: photoURL
+                    });
+                }
+                
+                // Update Firestore
+                await db.collection('users').doc(currentUser.uid).set(updates, { merge: true });
+                
+                // Update UI
+                updateProfileUI(currentUser, { ...currentUserData, ...updates });
+                
+                // Close modal
+                editProfileModal.hide();
+                
+                // Show success message
+                alert('Profile updated successfully!');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile. Please try again.');
+            } finally {
+                // Reset button state
+                saveChangesBtn.disabled = false;
+                saveChangesBtn.textContent = 'Save Changes';
+            }
+        });
+
+        // Tab switching functionality
+        document.querySelectorAll('.profile-nav-item').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.profile-nav-item').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show the corresponding tab content
+                const tabId = this.getAttribute('data-tab') + 'Tab';
+                document.getElementById(tabId).classList.add('active');
+                
+                // Load courses if courses tab is clicked
+                if (tabId === 'coursesTab') {
+                    loadUserCourses();
+                }
+            });
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            }).catch((error) => {
+                console.error('Logout error:', error);
+                alert('Error during logout. Please try again.');
+            });
+        });
+
+        // Password reset functionality
+        document.getElementById('changePasswordBtn').addEventListener('click', function() {
+            const user = auth.currentUser;
+            if (!user || !user.email) {
+                alert('User not authenticated. Please log in again.');
+                return;
+            }
+            
+            auth.sendPasswordResetEmail(user.email).then(() => {
+                alert('Password reset email sent. Please check your inbox.');
+            }).catch((error) => {
+                console.error('Password reset error:', error);
+                alert('Error sending password reset email. Please try again.');
+            });
+        });
+
+        // Update UI with user data
+        function updateProfileUI(user, userData) {
+            // Basic profile info
+            document.getElementById('profileName').textContent = 
+                userData?.fullName || user.displayName || 'User';
+            
+            document.getElementById('profileEmail').textContent = 
+                user.email || 'No email';
+            
+            document.getElementById('profileFullName').textContent = 
+                userData?.fullName || user.displayName || 'Not provided';
+            
+            document.getElementById('profileEmailDetail').textContent = 
+                user.email || 'Not provided';
+            
+            // Profile image (uses auth photoURL if available)
+            if (user.photoURL) {
+                document.getElementById('profileImage').src = user.photoURL;
+            } else if (userData?.photoURL) {
+                document.getElementById('profileImage').src = userData.photoURL;
+            }
+            
+            // Account creation date
+            if (userData?.createdAt) {
+                const joinDate = userData.createdAt.toDate();
+                document.getElementById('profileJoinDate').textContent = 
+                    joinDate.toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+            } else if (user.metadata.creationTime) {
+                const joinDate = new Date(user.metadata.creationTime);
+                document.getElementById('profileJoinDate').textContent = 
+                    joinDate.toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+            } else {
+                document.getElementById('profileJoinDate').textContent = 'Unknown';
+            }
+            
+            // Phone number (if available in Firestore)
+            if (userData?.phone) {
+                // Create phone element if doesn't exist
+                if (!document.getElementById('profilePhone')) {
+                    const phoneContainer = document.createElement('div');
+                    phoneContainer.className = 'profile-detail';
+                    phoneContainer.innerHTML = `
+                        <div class="profile-detail-label">Phone</div>
+                        <div class="profile-detail-value" id="profilePhone"></div>
+                    `;
+                    document.querySelector('.profile-card .row').appendChild(phoneContainer);
+                }
+                document.getElementById('profilePhone').textContent = userData.phone;
+            }
+        }
+
+        // Load user data when authentication state changes
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                
+                // Update user ID
+                document.getElementById('profileUserId').textContent = user.uid.substring(0, 8) + '...';
+                
+                // Update last login time
+                if (user.metadata.lastSignInTime) {
+                    const lastLogin = new Date(user.metadata.lastSignInTime);
+                    document.getElementById('lastLogin').textContent = 
+                        lastLogin.toLocaleString('en-US', {
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                }
+                
+                // Fetch additional user data from Firestore
+                db.collection('users').doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        currentUserData = userData;
+                        updateProfileUI(user, userData);
+                    } else {
+                        console.log("No user data found in Firestore");
+                        currentUserData = null;
+                        updateProfileUI(user, null);
+                    }
+                }).catch((error) => {
+                    console.error("Error getting user document:", error);
+                    currentUserData = null;
+                    updateProfileUI(user, null);
+                });
+            } else {
+                currentUser = null;
+                currentUserData = null;
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+</body>
+</html>
+
+        
