@@ -246,20 +246,27 @@
 
         // Check if user has access to the course
 
-        async function checkCourseAccess(userId) {
+
+        // ... (previous code remains the same until the checkCourseAccess function)
+
+async function checkCourseAccess(userId) {
     try {
         const userDoc = await db.collection('users').doc(userId).get();
         
         if (!userDoc.exists) {
+            console.log("User document doesn't exist");
             showAccessDenied();
             return;
         }
 
         const userData = userDoc.data();
+        console.log("User data:", userData); // For debugging
         
         // Check if course exists and is an array, then check if it includes course2
         const hasCourseAccess = Array.isArray(userData.course) && 
                               userData.course.includes('course2');
+        
+        console.log("Course access check result:", hasCourseAccess); // For debugging
         
         if (hasCourseAccess) {
             loadCourseContent();
@@ -271,117 +278,97 @@
         console.error("Error checking course access:", error);
         showAccessDenied();
     }
-        }
-        // Load course content for users with access
-        function loadCourseContent() {
-            // Hide loading message
-            loadingMessage.style.display = 'none';
-            
-            // Populate lesson list
-            renderLessonList();
-            
-            // Load the first lesson
+}
+
+// Load course content for users with access
+function loadCourseContent() {
+    // Hide loading message
+    loadingMessage.style.display = 'none';
+    
+    // Populate lesson list
+    renderLessonList();
+    
+    // Load the first lesson
+    loadLesson(currentLessonIndex);
+    
+    // Calculate and display progress
+    updateProgress();
+}
+
+// Load a specific lesson
+function loadLesson(index) {
+    const lesson = courseLessons[index];
+    
+    // Build restrictive YouTube embed URL - FIXED: using lesson.videoId instead of incorrect variable
+    const youtubeUrl = `https://www.youtube.com/embed/${lesson.videoId}?` +
+        `autoplay=0&` + // Don't autoplay
+        `controls=1&` + // Show controls
+        `rel=0&` + // No related videos
+        `modestbranding=1&` + // Minimal YouTube branding
+        `showinfo=0&` + // Hide video title and uploader
+        `fs=0&` + // Disable fullscreen button
+        `iv_load_policy=3&` + // Disable annotations
+        `disablekb=1&` + // Disable keyboard controls
+        `playsinline=1`; // Force inline playback on iOS
+    
+    contentArea.innerHTML = `
+        <div class="video-container">
+            <iframe 
+                src="${youtubeUrl}" 
+                frameborder="0" 
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+        <h2 class="fw-bold mb-3">${lesson.title}</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex gap-3">
+                <span class="badge bg-primary bg-opacity-10 text-primary">Lesson ${index + 1}</span>
+                <span class="text-muted"><i class="far fa-clock me-2"></i>${lesson.duration}</span>
+            </div>
+            <button class="btn btn-outline-primary btn-sm">
+                <i class="far fa-bookmark me-2"></i>Bookmark
+            </button>
+        </div>
+        
+        <div class="mb-4">
+            <p>This lesson covers the fundamental concepts of ${lesson.title.toLowerCase()}.</p>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <button id="prevBtn" class="btn btn-outline-secondary" ${index === 0 ? 'disabled' : ''}>
+                <i class="fas fa-arrow-left me-2"></i>Previous
+            </button>
+            <button id="nextBtn" class="btn btn-primary" ${index === courseLessons.length - 1 ? 'disabled' : ''}>
+                Next<i class="fas fa-arrow-right ms-2"></i>
+            </button>
+        </div>
+    `;
+    
+    // Add event listeners for navigation buttons
+    document.getElementById('prevBtn')?.addEventListener('click', () => {
+        if (currentLessonIndex > 0) {
+            currentLessonIndex--;
             loadLesson(currentLessonIndex);
-            
-            // Calculate and display progress
-            updateProgress();
+            updateActiveLesson();
         }
+    });
+    
+    document.getElementById('nextBtn')?.addEventListener('click', () => {
+        if (currentLessonIndex < courseLessons.length - 1) {
+            currentLessonIndex++;
+            loadLesson(currentLessonIndex);
+            updateActiveLesson();
+        }
+    });
+    
+    // Update progress
+    updateProgress();
+}
 
-        // Render the lesson list
-        function renderLessonList() {
-            lessonList.innerHTML = '';
-            
-            courseLessons.forEach((lesson, index) => {
-                const lessonItem = document.createElement('li');
-                lessonItem.className = `lesson-item ${index === currentLessonIndex ? 'active' : ''}`;
-                lessonItem.innerHTML = `
-                    <div class="fw-bold">${lesson.title}</div>
-                    <small class="text-muted">${lesson.duration}</small>
-                `;
-                
-                lessonItem.addEventListener('click', () => {
-                    currentLessonIndex = index;
-                    loadLesson(index);
-                    // Update active state in the list
-                    document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
-                    lessonItem.classList.add('active');
-                });
-                
-                lessonList.appendChild(lessonItem);
-            });
-        }
+// ... (rest of the code remains the same)
 
-        // Load a specific lesson
-        function loadLesson(index) {
-            const lesson = courseLessons[index];
-            
-            // Build restrictive YouTube embed URL
-            const youtubeUrl = `https://www.youtube.com/embed/${lesson.xSKUisvCz1U}?` +
-                `autoplay=0&` + // Don't autoplay
-                `controls=1&` + // Show controls
-                `rel=0&` + // No related videos
-                `modestbranding=1&` + // Minimal YouTube branding
-                `showinfo=0&` + // Hide video title and uploader
-                `fs=0&` + // Disable fullscreen button
-                `iv_load_policy=3&` + // Disable annotations
-                `disablekb=1&` + // Disable keyboard controls
-                `playsinline=1`; // Force inline playback on iOS
-            
-            contentArea.innerHTML = `
-                <div class="video-container">
-                    <iframe 
-                        src="${youtubeUrl}" 
-                        frameborder="0" 
-                        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                
-                <h2 class="fw-bold mb-3">${lesson.title}</h2>
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <div class="d-flex gap-3">
-                        <span class="badge bg-primary bg-opacity-10 text-primary">Lesson ${index + 1}</span>
-                        <span class="text-muted"><i class="far fa-clock me-2"></i>${lesson.duration}</span>
-                    </div>
-                    <button class="btn btn-outline-primary btn-sm">
-                        <i class="far fa-bookmark me-2"></i>Bookmark
-                    </button>
-                </div>
-                
-                <div class="mb-4">
-                    <p>This lesson covers the fundamental concepts of ${lesson.title.toLowerCase()}.</p>
-                </div>
-                
-                <div class="d-flex justify-content-between">
-                    <button id="prevBtn" class="btn btn-outline-secondary" ${index === 0 ? 'disabled' : ''}>
-                        <i class="fas fa-arrow-left me-2"></i>Previous
-                    </button>
-                    <button id="nextBtn" class="btn btn-primary" ${index === courseLessons.length - 1 ? 'disabled' : ''}>
-                        Next<i class="fas fa-arrow-right ms-2"></i>
-                    </button>
-                </div>
-            `;
-            
-            // Add event listeners for navigation buttons
-            document.getElementById('prevBtn')?.addEventListener('click', () => {
-                if (currentLessonIndex > 0) {
-                    currentLessonIndex--;
-                    loadLesson(currentLessonIndex);
-                    updateActiveLesson();
-                }
-            });
-            
-            document.getElementById('nextBtn')?.addEventListener('click', () => {
-                if (currentLessonIndex < courseLessons.length - 1) {
-                    currentLessonIndex++;
-                    loadLesson(currentLessonIndex);
-                    updateActiveLesson();
-                }
-            });
-            
-            // Update progress
-            updateProgress();
-        }
 
         // Update active lesson in the list
         function updateActiveLesson() {
