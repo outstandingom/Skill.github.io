@@ -246,7 +246,7 @@
 
         // Check if user has access to the course
 
-        async function checkCourseAccess(userId, courseId) {
+        async function checkCourseAccess(userId) {
     try {
         const userDoc = await db.collection('users').doc(userId).get();
         
@@ -257,15 +257,11 @@
 
         const userData = userDoc.data();
         
-        // Check if course exists in the courses array
+        // Specifically check if course2 exists in the courses array
         const hasCourseAccess = userData.courses && 
-                              userData.courses.includes(courseId);
+                              userData.courses.includes('course2');
         
-        // If no course match found, check payment validity
-        const lastPayment = userData.lastPaymentAt;
-        const paymentValid = lastPayment ? new Date(lastPayment) > new Date() : false;
-        
-        if (hasCourseAccess || paymentValid) {
+        if (hasCourseAccess) {
             loadCourseContent();
         } else {
             showAccessDenied();
