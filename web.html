@@ -257,9 +257,9 @@
 
         const userData = userDoc.data();
         
-        // Specifically check if course2 exists in the courses array
-        const hasCourseAccess = userData.courses && 
-                              userData.courses.includes('course2');
+        // Check if course exists and is an array, then check if it includes course2
+        const hasCourseAccess = Array.isArray(userData.course) && 
+                              userData.course.includes('course2');
         
         if (hasCourseAccess) {
             loadCourseContent();
