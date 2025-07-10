@@ -618,7 +618,7 @@
                 
                 if (!userDoc.exists) {
                     // Save new user to Firestore
-                    await db.collection('class').doc(user.uid).set({
+                    await db.collection('User').doc(user.uid).set({
                         fullName: user.displayName || 'Google User',
                         email: user.email,
                         phone: user.phoneNumber || '',
