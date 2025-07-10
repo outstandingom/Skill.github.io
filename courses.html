@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+no<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -294,6 +294,8 @@
             appId: "YOUR_APP_ID"
         };
 
+             
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -306,122 +308,111 @@
         const loadingOverlay = document.getElementById('loading-overlay');
         const loadingText = document.getElementById('loading-text');
 
-        // Check authentication state
-        auth.onAuthStateChanged(async (user) => {
-            if (!user) {
-                // User is not logged in, redirect to login page
-                window.location.href = 'login.html';
-            } else {
-                // User is logged in, check their enrolled courses
-                checkEnrolledCourses(user.uid);
-            }
+        // Check authentication state when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    // User is signed in, check their enrolled courses
+                    await checkEnrolledCourses(user.uid);
+                } else {
+                    // User is not signed in, redirect to login with return URL
+                    window.location.href = `login.html?returnUrl=${encodeURIComponent(window.location.href)}`;
+                }
+            });
         });
 
         // Function to check enrolled courses
         async function checkEnrolledCourses(userId) {
             try {
+                loadingOverlay.style.display = 'flex';
+                loadingText.textContent = 'Loading your courses...';
+                
                 const userDoc = await db.collection('users').doc(userId).get();
+                
                 if (userDoc.exists) {
                     const userData = userDoc.data();
                     const courses = userData.course || [];
                     
-                    // Show enrolled badges for courses the user is already enrolled in
-                    if (courses.includes('course1')) {
-                        document.getElementById('web-dev-enrolled').style.display = 'block';
-                        enrollWebDevBtn.textContent = 'Already Enrolled';
-                        enrollWebDevBtn.disabled = true;
-                    }
+                    // Update UI based on enrolled courses
+                    updateCourseUI('course1', 'web-dev-enrolled', enrollWebDevBtn);
+                    updateCourseUI('course2', 'cyber-enrolled', enrollCyberBtn);
+                    updateCourseUI('course3', 'finance-enrolled', enrollFinanceBtn);
                     
-                    if (courses.includes('course2')) {
-                        document.getElementById('cyber-enrolled').style.display = 'block';
-                        enrollCyberBtn.textContent = 'Already Enrolled';
-                        enrollCyberBtn.disabled = true;
-                    }
-                    
-                    if (courses.includes('course3')) {
-                        document.getElementById('finance-enrolled').style.display = 'block';
-                        enrollFinanceBtn.textContent = 'Already Enrolled';
-                        enrollFinanceBtn.disabled = true;
+                    function updateCourseUI(courseId, badgeId, button) {
+                        if (courses.includes(courseId)) {
+                            document.getElementById(badgeId).style.display = 'block';
+                            button.textContent = 'Already Enrolled';
+                            button.disabled = true;
+                            button.classList.remove('btn-primary', 'btn-danger', 'btn-info');
+                            button.classList.add('btn-secondary');
+                        }
                     }
                 }
             } catch (error) {
                 console.error('Error checking enrolled courses:', error);
+                alert('Error loading your course information. Please refresh the page.');
+            } finally {
+                loadingOverlay.style.display = 'none';
             }
         }
 
-        // Enroll in Web Development (course1)
-        enrollWebDevBtn.addEventListener('click', () => {
-            enrollCourse('course1', 'Web Development');
-        });
-
-        // Enroll in Cybersecurity (course2)
-        enrollCyberBtn.addEventListener('click', () => {
-            enrollCourse('course2', 'Cybersecurity');
-        });
-
-        // Enroll in Financial Trading (course3)
-        enrollFinanceBtn.addEventListener('click', () => {
-            enrollCourse('course3', 'Financial Trading');
-        });
+        // Enroll button event listeners
+        enrollWebDevBtn.addEventListener('click', () => enrollCourse('course1', 'Web Development'));
+        enrollCyberBtn.addEventListener('click', () => enrollCourse('course2', 'Cybersecurity'));
+        enrollFinanceBtn.addEventListener('click', () => enrollCourse('course3', 'Financial Trading'));
 
         // Function to enroll in a course
         async function enrollCourse(courseId, courseName) {
             const user = auth.currentUser;
             if (!user) {
-                window.location.href = 'login.html';
+                window.location.href = `login.html?returnUrl=${encodeURIComponent(window.location.href)}`;
                 return;
             }
 
-            // Show loading overlay
             loadingText.textContent = `Enrolling in ${courseName}...`;
             loadingOverlay.style.display = 'flex';
 
             try {
-                // Get current user data
+                // First check if already enrolled
                 const userDoc = await db.collection('users').doc(user.uid).get();
-                const userData = userDoc.data();
-                const currentCourses = userData.course || [];
-
-                // Check if already enrolled
+                const currentCourses = userDoc.data().course || [];
+                
                 if (currentCourses.includes(courseId)) {
-                    alert(`You are already enrolled in ${courseName}`);
-                    return;
+                    throw new Error(`You are already enrolled in ${courseName}`);
                 }
 
-                // Update user's courses array
+                // Update Firestore
                 await db.collection('users').doc(user.uid).update({
-                    course: firebase.firestore.FieldValue.arrayUnion(courseId)
+                    course: firebase.firestore.FieldValue.arrayUnion(courseId),
+                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                 });
 
-                // Update UI to show enrollment
-                if (courseId === 'course1') {
-                    document.getElementById('web-dev-enrolled').style.display = 'block';
-                    enrollWebDevBtn.textContent = 'Already Enrolled';
-                    enrollWebDevBtn.disabled = true;
-                } else if (courseId === 'course2') {
-                    document.getElementById('cyber-enrolled').style.display = 'block';
-                    enrollCyberBtn.textContent = 'Already Enrolled';
-                    enrollCyberBtn.disabled = true;
-                } else if (courseId === 'course3') {
-                    document.getElementById('finance-enrolled').style.display = 'block';
-                    enrollFinanceBtn.textContent = 'Already Enrolled';
-                    enrollFinanceBtn.disabled = true;
-                }
+                // Update UI
+                const badgeId = `${courseId.replace('course', '')}-enrolled`;
+                const buttonId = `enroll-${courseId.replace('course', '')}`;
+                
+                document.getElementById(badgeId).style.display = 'block';
+                const button = document.getElementById(buttonId);
+                button.textContent = 'Already Enrolled';
+                button.disabled = true;
+                button.classList.remove('btn-primary', 'btn-danger', 'btn-info');
+                button.classList.add('btn-secondary');
 
-                // Show success message
-                loadingText.textContent = `Successfully enrolled in ${courseName}! Redirecting to dashboard...`;
+                // Show success and redirect
+                loadingText.textContent = `Successfully enrolled in ${courseName}! Redirecting...`;
                 setTimeout(() => {
                     window.location.href = 'profile.html';
-                }, 2000);
+                }, 1500);
 
             } catch (error) {
-                console.error('Error enrolling in course:', error);
-                loadingText.textContent = `Error enrolling in ${courseName}. Please try again.`;
+                console.error('Enrollment error:', error);
+                loadingText.textContent = error.message || 'Enrollment failed. Please try again.';
                 setTimeout(() => {
                     loadingOverlay.style.display = 'none';
                 }, 2000);
             }
-        }
+                }
+                    
     </script>
 </body>
   </html>
