@@ -245,32 +245,37 @@
         }
 
         // Check if user has access to the course
-        function checkCourseAccess(userId) {
-            db.collection('users').doc(userId).get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        const userData = doc.data();
-                        // Check if user has this course in their paidCourses array
-                        hasCourseAccess = userData.paidCourses && userData.paidCourses.includes(courseId);
-                        
-                        if (hasCourseAccess) {
-                            // User has access, load course content
-                            loadCourseContent();
-                        } else {
-                            // User doesn't have access
-                            showAccessDenied();
-                        }
-                    } else {
-                        // User document doesn't exist
-                        showAccessDenied();
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error checking course access:", error);
-                    showAccessDenied();
-                });
+
+        async function checkCourseAccess(userId, courseId) {
+    try {
+        const userDoc = await db.collection('users').doc(userId).get();
+        
+        if (!userDoc.exists) {
+            showAccessDenied();
+            return;
         }
 
+        const userData = userDoc.data();
+        
+        // Check if course exists in the courses array
+        const hasCourseAccess = userData.courses && 
+                              userData.courses.includes(courseId);
+        
+        // If no course match found, check payment validity
+        const lastPayment = userData.lastPaymentAt;
+        const paymentValid = lastPayment ? new Date(lastPayment) > new Date() : false;
+        
+        if (hasCourseAccess || paymentValid) {
+            loadCourseContent();
+        } else {
+            showAccessDenied();
+        }
+        
+    } catch (error) {
+        console.error("Error checking course access:", error);
+        showAccessDenied();
+    }
+        }
         // Load course content for users with access
         function loadCourseContent() {
             // Hide loading message
