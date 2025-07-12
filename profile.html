@@ -1175,6 +1175,8 @@
         }
 
         // Your original function (unchanged)
+
+        // Your original navigation function (unchanged)
 function updateLessonNavigation(currentLesson) {
     const current = parseInt(currentLesson);
     const prevBtn = document.querySelector('.prev-lesson-btn');
@@ -1195,32 +1197,39 @@ function updateLessonNavigation(currentLesson) {
     }
 }
 
-// Separate script to handle video stopping
+// Enhanced video control script
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to stop YouTube video
-    function setupVideoStop() {
-        const iframe = document.querySelector('.lesson-section iframe');
-        if (!iframe) return;
-        
-        const stopVideo = function() {
-            const videoSrc = iframe.src;
-            iframe.src = '';
-            setTimeout(() => { iframe.src = videoSrc; }, 100);
-        };
-        
-        // Add to both buttons
-        document.querySelector('.prev-lesson-btn')?.addEventListener('click', stopVideo);
-        document.querySelector('.next-lesson-btn')?.addEventListener('click', stopVideo);
+    // Function to stop all YouTube videos
+    function stopAllVideos() {
+        document.querySelectorAll('.lesson-section iframe').forEach(iframe => {
+            if (iframe.src.includes('youtube.com')) {
+                const videoSrc = iframe.src;
+                iframe.src = '';
+                setTimeout(() => { iframe.src = videoSrc; }, 100);
+            }
+        });
     }
     
-    // Initial setup
-    setupVideoStop();
+    // Setup for next/prev buttons
+    document.querySelector('.next-lesson-btn')?.addEventListener('click', stopAllVideos);
+    document.querySelector('.prev-lesson-btn')?.addEventListener('click', stopAllVideos);
     
-    // Optional: Re-setup when lessons change (if your app dynamically loads content)
-    // You would call this whenever the lesson changes
-    // window.reinitializeVideoStop = setupVideoStop;
+    // Setup for lesson links
+    document.querySelectorAll('.lesson-link').forEach(link => {
+        link.addEventListener('click', stopAllVideos);
+    });
+    
+    // Optional: If you dynamically load content later, you may need to reattach these handlers
+    window.reinitializeVideoControls = function() {
+        document.querySelectorAll('.lesson-link').forEach(link => {
+            link.removeEventListener('click', stopAllVideos);
+            link.addEventListener('click', stopAllVideos);
+        });
+    };
 });
+
+        
 
         function markLessonComplete(lessonNumber) {
             // Implement logic to mark lesson as complete and update progress
