@@ -1174,25 +1174,53 @@
             });
         }
 
-        function updateLessonNavigation(currentLesson) {
-            const current = parseInt(currentLesson);
-            const prevBtn = document.querySelector('.prev-lesson-btn');
-            const nextBtn = document.querySelector('.next-lesson-btn');
-            
-            // Update previous button
-            if (current === 1) {
-                prevBtn.disabled = true;
-            } else {
-                prevBtn.disabled = false;
-            }
-            
-            // Update next button
-            if (current === 7) {
-                nextBtn.textContent = 'Complete Course';
-            } else {
-                nextBtn.textContent = 'Next Lesson';
-            }
-        }
+        // Your original function (unchanged)
+function updateLessonNavigation(currentLesson) {
+    const current = parseInt(currentLesson);
+    const prevBtn = document.querySelector('.prev-lesson-btn');
+    const nextBtn = document.querySelector('.next-lesson-btn');
+    
+    // Update previous button
+    if (current === 1) {
+        prevBtn.disabled = true;
+    } else {
+        prevBtn.disabled = false;
+    }
+    
+    // Update next button
+    if (current === 7) {
+        nextBtn.textContent = 'Complete Course';
+    } else {
+        nextBtn.textContent = 'Next Lesson';
+    }
+}
+
+// Separate script to handle video stopping
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to stop YouTube video
+    function setupVideoStop() {
+        const iframe = document.querySelector('.lesson-section.active iframe');
+        if (!iframe) return;
+        
+        const stopVideo = function() {
+            const videoSrc = iframe.src;
+            iframe.src = '';
+            setTimeout(() => { iframe.src = videoSrc; }, 100);
+        };
+        
+        // Add to both buttons
+        document.querySelector('.prev-lesson-btn')?.addEventListener('click', stopVideo);
+        document.querySelector('.next-lesson-btn')?.addEventListener('click', stopVideo);
+    }
+    
+    // Initial setup
+    setupVideoStop();
+    
+    // Optional: Re-setup when lessons change (if your app dynamically loads content)
+    // You would call this whenever the lesson changes
+    // window.reinitializeVideoStop = setupVideoStop;
+});
 
         function markLessonComplete(lessonNumber) {
             // Implement logic to mark lesson as complete and update progress
