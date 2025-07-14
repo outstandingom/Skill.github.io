@@ -436,10 +436,86 @@ document.addEventListener('DOMContentLoaded', function() {
                 user.email || 'Not provided';
             
             // Profile image (uses auth photoURL if available)
-            if (user.photoURL) {
-                document.getElementById('profileImage').src = user.photoURL;
-            } else if (userData?.photoURL) {
-                document.getElementById('profileImage').src = userData.photoURL;
+            
+                    // Account creation date
+            if (userData?.createdAt) {
+                const joinDate = userData.createdAt.toDate();
+                document.getElementById('profileJoinDate').textContent = 
+                    joinDate.toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+            } else if (user.metadata.creationTime) {
+                const joinDate = new Date(user.metadata.creationTime);
+                document.getElementById('profileJoinDate').textContent = 
+                    joinDate.toLocaleDateString('en-US', {
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric'
+                    });
+            } else {
+                document.getElementById('profileJoinDate').textContent = 'Unknown';
             }
+            
+            // Phone number (if available in Firestore)
+            if (userData?.phone) {
+                // Create phone element if doesn't exist
+                if (!document.getElementById('profilePhone')) {
+                    const phoneContainer = document.createElement('div');
+                    phoneContainer.className = 'profile-detail';
+                    phoneContainer.innerHTML = `
+                        <div class="profile-detail-label">Phone</div>
+                        <div class="profile-detail-value" id="profilePhone"></div>
+                    `;
+                    document.querySelector('.profile-card .row').appendChild(phoneContainer);
+                }
+                document.getElementById('profilePhone').textContent = userData.phone;
+            }
+        }
+
+        // Load user data when authentication state changes
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                
+                // Update user ID
+                document.getElementById('profileUserId').textContent = user.uid.substring(0, 8) + '...';
+                
+                // Update last login time
+                if (user.metadata.lastSignInTime) {
+                    const lastLogin = new Date(user.metadata.lastSignInTime);
+                    document.getElementById('lastLogin').textContent = 
+                        lastLogin.toLocaleString('en-US', {
+                            year: 'numeric', 
+                            month: 'short', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                }
+                
+                // Fetch additional user data from Firestore
+                db.collection('users').doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        const userData = doc.data();
+                        currentUserData = userData;
+                        updateProfileUI(user, userData);
+                    } else {
+                        console.log("No user data found in Firestore");
+                        currentUserData = null;
+                        updateProfileUI(user, null);
+                    }
+                }).catch((error) => {
+                    console.error("Error getting user document:", error);
+                    currentUserData = null;
+                    updateProfileUI(user, null);
+                });
+            } else {
+                currentUser = null;
+                currentUserData = null;
+                window.location.href = 'login.html';
+            }
+        });
             
           
