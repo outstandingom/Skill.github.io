@@ -280,32 +280,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore-compat.js"></script>
-    
+
+    <script src="profile.js"></script>
     <script>
         // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
-            authDomain: "skill-craft-79597.firebaseapp.com",
-            projectId: "skill-craft-79597",
-            storageBucket: "skill-craft-79597.appspot.com",
-            messagingSenderId: "916636695046",
-            appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
-            measurementId: "G-3MM50DH5SY"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Check authentication state
-        auth.onAuthStateChanged((user) => {
-            if (!user) {
-                // User is not logged in, redirect to registration page
-                window.location.href = 'register.html';
-            }
-            // If user is logged in, do nothing (stay on page)
-        });
+    
 
         // Handle enroll button clicks
         document.querySelectorAll('.enroll-btn').forEach(button => {
