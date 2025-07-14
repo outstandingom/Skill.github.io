@@ -2,14 +2,16 @@ const firebaseConfig = {
     apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
     authDomain: "skill-craft-79597.firebaseapp.com",
     projectId: "skill-craft-79597",
-    storageBucket: "skill-craft-79597.firebasestorage.app",
+    storageBucket: "skill-craft-79597.appspot.com",  // Fixed storage bucket URL
     messagingSenderId: "916636695046",
     appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
     measurementId: "G-3MM50DH5SY"
-  };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+// Rest of your code...
 
         // DOM Elements
         const loginForm = document.getElementById('loginForm');
