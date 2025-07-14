@@ -59,7 +59,7 @@ const firebaseConfig = {
                         noCoursesMsg.innerHTML = `
                             <div class="alert alert-info">
                                 <i class="fas fa-book me-2"></i> You haven't purchased any courses yet.
-                                <a href="courses.html" class="alert-link">Browse courses</a>
+                                <a href="index.html" class="alert-link">Browse courses</a>
                             </div>
                         `;
                         if (courseContainer) {
