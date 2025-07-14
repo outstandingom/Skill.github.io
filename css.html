@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2: CSS Styling & Responsive Design | SkillCraft Web Development</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --dark: #212529;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        
+        .lesson-header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .tag-card {
+            border-left: 4px solid var(--primary);
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag-name {
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 6px;
+            position: relative;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .mobile-steps {
+            background-color: #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Lesson Header -->
+    <header class="lesson-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-5 fw-bold">Lesson 2: CSS Styling & Responsive Design</h1>
+                    <p class="lead">Make your website beautiful and work on all devices!</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Lesson Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- What is CSS? -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-paint-brush me-2"></i>What is CSS?</h2>
+                    <div class="tag-card">
+                        <p><strong>CSS (Cascading Style Sheets)</strong> is the language used to style web pages.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Key Features:
+                            </h5>
+                            <ul>
+                                <li>Styles your HTML (colors, fonts, spacing, layout)</li>
+                                <li>Keeps design separate from content</li>
+                                <li>Works together with HTML and JavaScript</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basic CSS Properties -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-sliders-h me-2"></i>Basic CSS Properties</h2>
+                    
+                    <div class="mb-4">
+                        <h4>Selectors and Common Properties</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>/* Selectors */
+p { }                  /* Element selector */
+.class { }             /* Class selector */
+#id { }                /* ID selector */
+
+/* Colors & Fonts */
+color: #333;           /* Text color */
+background-color: #fff;/* Background */
+font-family: Arial;    /* Font family */
+
+/* Spacing */
+margin: 10px;          /* Outer space */
+padding: 15px;         /* Inner space */
+
+/* Box Model */
+border: 1px solid #ddd;</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Layout with Flexbox & Grid -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-th me-2"></i>Layout with Flexbox & Grid</h2>
+                    <p>Modern CSS layout techniques for creating flexible designs.</p>
+                    
+                    <div class="mb-4">
+                        <h4>Flexbox</h4>
+                        <p>Easy one-direction layout (row/column)</p>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>.container {
+  display: flex;
+  justify-content: center; /* Horizontal alignment */
+  align-items: center;     /* Vertical alignment */
+  gap: 20px;               /* Space between items */
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4>CSS Grid</h4>
+                        <p>Create rows & columns for complex layouts</p>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  grid-gap: 15px;                /* Space between items */
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Making Sites Responsive -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-mobile-alt me-2"></i>Making Sites Responsive</h2>
+                    <div class="tag-card">
+                        <p>Responsive design ensures your website works well on all devices.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Key Techniques:
+                            </h5>
+                            <ul>
+                                <li>Use relative units (%, em, rem)</li>
+                                <li>Media queries adjust design for different screens</li>
+                                <li>Flexbox and Grid are inherently responsive</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>/* Media Query Example */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+}</code></pre>
+                    </div>
+                </section>
+
+                <!-- Bootstrap Framework -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-cubes me-2"></i>Bootstrap Framework</h2>
+                    <p>Bootstrap is a popular CSS framework that provides ready-made components and a responsive grid system.</p>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>&lt;!-- Bootstrap Grid Example --&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="col-md-6"&gt;Left Column&lt;/div&gt;
+    &lt;div class="col-md-6"&gt;Right Column&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                    
+                    <div class="tag-card mt-4">
+                        <h5 class="d-flex align-items-center">
+                            <i class="fas fa-star text-warning me-2"></i>Bootstrap Benefits:
+                        </h5>
+                        <ul>
+                            <li>Pre-designed components (buttons, cards, navbars)</li>
+                            <li>Responsive grid system built-in</li>
+                            <li>Consistent design across browsers</li>
+                            <li>Large community and documentation</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Summary -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-clipboard-list me-2"></i>Summary</h2>
+                    <div class="mobile-steps">
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">1</span>
+                            CSS styles and layouts your website
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">2</span>
+                            Flexbox & Grid help create modern, flexible designs
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">3</span>
+                            Responsive design ensures mobile friendliness
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">4</span>
+                            Bootstrap makes development faster and easier
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Practice Exercise -->
+                <section class="mb-5 p-4 border rounded bg-light">
+                    <h3 class="mb-3"><i class="fas fa-pencil-alt me-2"></i>Practice Exercise</h3>
+                    <p>Create a responsive webpage with:</p>
+                    <ul>
+                        <li>A header with custom styling (colors, fonts)</li>
+                        <li>A main content area using Flexbox or Grid</li>
+                        <li>Media queries to adjust layout on mobile</li>
+                        <li>At least one Bootstrap component</li>
+                    </ul>
+                    <button class="btn btn-primary mt-2">Download Starter Files</button>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2023 SkillCraft Web Development Course</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Copy Code Functionality -->
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.querySelector('code').textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    button.innerHTML = '<i class="far fa-copy"></i> Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+                      </html>
