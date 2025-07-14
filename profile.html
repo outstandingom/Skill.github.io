@@ -262,6 +262,315 @@
             
             <div class="col-lg-9">
                 <!-- Profile Tab -->
+                 <div id="profileTab" class="tab-content active">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Personal Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Full Name</div>
+                                    <div id="profileFullName" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Email</div>
+                                    <div id="profileEmailDetail" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Member Since</div>
+                                    <div id="profileJoinDate" class="profile-detail-value">Unknown</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">User ID</div>
+                                    <div id="profileUserId" class="profile-detail-value">Loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fas fa-edit me-2"></i>Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Security</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-shield-alt me-2"></i> Last login: <span id="lastLogin">Unknown</span>
+                        </div>
+                        
+                        <div class="d-flex gap-3">
+                            <button id="changePasswordBtn" class="btn btn-outline-danger">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fas fa-envelope me-2"></i>Update Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Courses Tab -->
+                <div id="coursesTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">My Courses</h4>
+                        <p class="text-muted mb-4">Your enrolled courses and progress</p>
+                        
+                        <div class="row g-4">
+                            <!-- Courses will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Settings</h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Notifications</h5>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="courseUpdates" checked>
+                                <label class="form-check-label" for="courseUpdates">Course Updates</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="promotionalOffers">
+                                <label class="form-check-label" for="promotionalOffers">Promotional Offers</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Privacy Settings</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePublic" checked>
+                                <label class="form-check-label" for="profilePublic">Public Profile</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePrivate">
+                                <label class="form-check-label" for="profilePrivate">Private Profile</label>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-danger">
+                            <h5 class="fw-bold mb-2">Danger Zone</h5>
+                            <p class="mb-3">These actions are irreversible. Proceed with caution.</p>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web Development Course Content -->
+    <div id="webCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Web Development</h2>
+                        <p class="text-muted mb-0">Master HTML, CSS, JavaScript and modern frameworks</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="webProgressBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted" id="webProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: HTML Fundamentals</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: CSS Styling</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: JavaScript Basics & DOM</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Javascript part 2</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: Javascript part 3</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Javascript part 4</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Github account creation</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="8">Lesson 8: Github account creation</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="9">Lesson 9: Github account creation</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="10">Lesson 10: Github account creation</a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">HTML Fundamentals</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/nLfk4dJ7o_I?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages.</p>
+                                <ul>
+                                    <br><br><br><br><br>
+                                    <li>HTML describes the structure of a web page</li>
+                                    <li>HTML consists of a series of elements</li>
+                                    <li>HTML elements tell the browser how to display the content</li>
+                                    <li>HTML elements are represented by tags</li>
+                                    <li>HTML elements are represented by 
+                                        hivuh
+                                        huhihi88yioh8 tags</li>
+                                </ul>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Always include the DOCTYPE declaration at the beginning of your HTML documents.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 2 Content -->
+                        <div class="lesson-section" data-lesson="2">
+                            <h3 class="fw-bold mb-3">CSS Styling</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/EHoTCHbJBeI?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>CSS (Cascading Style Sheets) is used to style and layout web pages.</p>
+                                <ul>
+                                    <li>CSS describes how HTML elements should be displayed</li>
+                                    <li>CSS saves a lot of work by controlling multiple web pages at once</li>
+                                    <li>External stylesheets are stored in CSS files</li>
+                                </ul>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Use external stylesheets for better maintainability.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 3 Content -->
+                        <div class="lesson-section" data-lesson="3">
+                            <h3 class="fw-bold mb-3">JavaScript Basics & Dom manipulation</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/EHo8‑uIfsDA?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>JavaScript is a programming language that adds interactivity to your website.</p>
+                                <ul>
+                                    <li>JavaScript can change HTML content</li>
+                                    <li>JavaScript can change HTML attributes</li>
+                                    <li>JavaScript can change CSS styles</li>
+                                    <li>JavaScript can validate data</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 4 Content -->
+                        <div class="lesson-section" data-lesson="4">
+                            <h3 class="fw-bold mb-3">Javascript part 2</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/wUlH4RgmsOc?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Responsive web design makes your web page look good on all devices.</p>
+                                <ul>
+                                    <li>Use responsive meta tag in HTML</li>
+                                    <li>Use media queries in CSS</li>
+                                    <li>Use flexible grid layouts</li>
+                                    <li>Use responsive images</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 5 Content -->
+                        <div class="lesson-section" data-lesson="5">
+                            <h3 class="fw-bold mb-3">Javascript part 3</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/T_ljSbUMpHo?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>The Document Object Model (DOM) is a programming interface for web documents.</p>
+                                <ul>
+                                    <li>The DOM represents the document as nodes and objects</li>
+                                    <li>JavaScript can manipulate the DOM</li>
+                                    <li>DOM methods allow programmatic access to the tree</li>
+                                    <li>DOM events allow handling user interactions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 6 Content -->
+                        <div class="lesson-section" data-lesson="6">
+                            <h3 class="fw-bold mb-3"> javascript part 4</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/ASo52it9wK0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Github account creation</h4>
+                                <p>JavaScript frameworks are collections of JavaScript code libraries that provide developers with pre-written code for routine tasks.</p>
+                                <ul>
+                                    <li>React - A library for building user interfaces</li>
+                                    <li>Angular - A platform for building mobile and desktop web applications</li>
+                                    <li>Vue - A progressive framework for building user interfaces</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 7 Content -->
+
+                        <div class="lesson-section" data-lesson="7">
+                            <h3 class="fw-bold mb-3"> javascript part 4</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/_N2TZylLFYY?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Github account creation</h4>
+                                <p>JavaScript frameworks are collections of JavaScript code libraries that provide developers with pre-written code for routine tasks.</p>
+             
                 
 
 
