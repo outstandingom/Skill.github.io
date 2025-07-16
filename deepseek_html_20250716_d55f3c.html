@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Fundamentals | SkillCraft Web Development</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --dark: #212529;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        
+        .lesson-header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .tag-card {
+            border-left: 4px solid var(--primary);
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag-name {
+            font-family: monospace;
+            color: #d63384;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 6px;
+            position: relative;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .mobile-steps {
+            background-color: #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .note-highlight {
+            background-color: #fff3cd;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Lesson Header -->
+    <header class="lesson-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-5 fw-bold">JavaScript Fundamentals</h1>
+                    <p class="lead">Master the core concepts of JavaScript programming</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Lesson Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Variables & Scope -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-code me-2"></i>Variables & Scope</h2>
+                    <div class="tag-card">
+                        <p><strong>Variables</strong> are containers for storing data values in JavaScript.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Variable Types:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">var</span> - Function-scoped, can be redeclared</li>
+                                <li><span class="tag-name">let</span> - Block-scoped, can be updated</li>
+                                <li><span class="tag-name">const</span> - Block-scoped, cannot be reassigned</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// var - function-scoped
+var userName = "Alice";
+console.log(userName);
+
+// let - block-scoped
+let userAge = 25;
+userAge = 26; // Valid
+
+// const - block-scoped, constant
+const PI = 3.14159;
+// PI = 3.14; // Error - can't reassign</code></pre>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4>Scope & Hoisting</h4>
+                        <p>JavaScript has function scope (var) and block scope (let/const). Variables declared with <span class="tag-name">var</span> are hoisted to the top of their scope.</p>
+                        
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>// Hoisting example
+console.log(hoistedVar); // undefined (var is hoisted)
+var hoistedVar = "I was hoisted";
+
+// console.log(hoistedLet); // Error (let not hoisted)
+let hoistedLet = "I'm not hoisted";
+
+// Scope example
+function demoScope() {
+  if (true) {
+    var functionScoped = "I'm a var";
+    let blockScoped = "I'm a let";
+  }
+  console.log(functionScoped); // Works
+  // console.log(blockScoped); // Error
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Data Types -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-database me-2"></i>Data Types</h2>
+                    <div class="tag-card">
+                        <p>JavaScript has dynamic types - the same variable can hold different data types.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Primitive Data Types:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">String</span> - Text values</li>
+                                <li><span class="tag-name">Number</span> - Numeric values</li>
+                                <li><span class="tag-name">Boolean</span> - true/false</li>
+                                <li><span class="tag-name">Null</span> - Intentional empty value</li>
+                                <li><span class="tag-name">Undefined</span> - Variable not initialized</li>
+                                <li><span class="tag-name">Symbol</span> - Unique identifier</li>
+                                <li><span class="tag-name">BigInt</span> - Large integers</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// String
+let greeting = "Hello World";
+console.log(typeof greeting); // "string"
+
+// Number
+let integer = 42;
+let decimal = 3.14;
+console.log(typeof integer); // "number"
+
+// Boolean
+let isActive = true;
+console.log(typeof isActive); // "boolean"
+
+// Null (intentional empty value)
+let emptyValue = null;
+console.log(typeof emptyValue); // "object" (historical bug)
+
+// Undefined
+let notDefined;
+console.log(typeof notDefined); // "undefined"</code></pre>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4>Reference Types</h4>
+                        <p>Objects, arrays and functions are reference types in JavaScript.</p>
+                        
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>// Object
+let person = {
+  name: "John",
+  age: 30
+};
+console.log(typeof person); // "object"
+
+// Array
+let colors = ["red", "green", "blue"];
+console.log(typeof colors); // "object"
+
+// Function
+function greet() { return "Hello"; }
+console.log(typeof greet); // "function"</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Operators -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-calculator me-2"></i>Operators</h2>
+                    <div class="tag-card">
+                        <p>Operators perform operations on variables and values.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Operator Types:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">Arithmetic</span> - +, -, *, /, %, **</li>
+                                <li><span class="tag-name">Assignment</span> - =, +=, -=, *=, /=</li>
+                                <li><span class="tag-name">Comparison</span> - ==, ===, !=, !==, >, <, >=, <=</li>
+                                <li><span class="tag-name">Logical</span> - &&, ||, !</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// Arithmetic
+let x = 10, y = 3;
+console.log("10 + 3 =", x + y); // 13
+console.log("10 % 3 =", x % y); // 1 (remainder)
+console.log("10 ** 3 =", x ** y); // 1000 (exponent)
+
+// Assignment
+let counter = 5;
+counter += 2; // counter = counter + 2
+console.log(counter); // 7
+
+// Comparison
+console.log("10 == '10':", x == '10'); // true (loose equality)
+console.log("10 === '10':", x === '10'); // false (strict equality)
+
+// Logical
+console.log("true && false:", true && false); // false
+console.log("true || false:", true || false); // true
+console.log("!true:", !true); // false</code></pre>
+                    </div>
+                </section>
+
+                <!-- Functions -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-cubes me-2"></i>Functions</h2>
+                    <div class="tag-card">
+                        <p>Functions are reusable blocks of code that perform specific tasks.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Function Types:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">Function Declarations</span> - Hoisted, can be called before declaration</li>
+                                <li><span class="tag-name">Function Expressions</span> - Stored in variables, not hoisted</li>
+                                <li><span class="tag-name">Arrow Functions</span> - Shorter syntax, no 'this' binding</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// Function Declaration
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+console.log(greet("Alice"));
+
+// Function Expression
+const multiply = function(a, b) {
+  return a * b;
+};
+console.log(multiply(4, 6));
+
+// Arrow Function
+const square = num => num * num;
+console.log(square(5));
+
+// Default Parameters
+function createUser(name, role = "user") {
+  return `${name} is a ${role}`;
+}
+console.log(createUser("Bob")); // "Bob is a user"</code></pre>
+                    </div>
+                </section>
+
+                <!-- Control Flow -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-project-diagram me-2"></i>Control Flow</h2>
+                    <p>Control flow statements determine the order in which code executes.</p>
+                    
+                    <div class="mb-4">
+                        <h4>Conditional Statements</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>// if/else
+function checkAge(age) {
+  if (age < 13) {
+    return "Child";
+  } else if (age < 20) {
+    return "Teenager";
+  } else {
+    return "Adult";
+  }
+}
+
+// Ternary Operator (shorthand if/else)
+const isAdult = (age) => age >= 18 ? "Adult" : "Minor";
+
+// Switch Statement
+function getDayName(dayNum) {
+  switch(dayNum) {
+    case 1: return "Monday";
+    case 2: return "Tuesday";
+    // ... other cases
+    default: return "Invalid day";
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4>Loops</h4>
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                            <pre><code>// for loop
+for (let i = 0; i < 5; i++) {
+  console.log(i);
+}
+
+// while loop
+let count = 0;
+while (count < 5) {
+  console.log(count);
+  count++;
+}
+
+// for...of loop (arrays)
+const colors = ["red", "green", "blue"];
+for (const color of colors) {
+  console.log(color);
+}
+
+// for...in loop (objects)
+const person = {name: "John", age: 30};
+for (const key in person) {
+  console.log(`${key}: ${person[key]}`);
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Arrays -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-list me-2"></i>Arrays</h2>
+                    <div class="tag-card">
+                        <p>Arrays are ordered collections of values that can hold multiple data types.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Common Array Methods:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">push/pop</span> - Add/remove from end</li>
+                                <li><span class="tag-name">shift/unshift</span> - Add/remove from start</li>
+                                <li><span class="tag-name">slice/splice</span> - Extract/insert elements</li>
+                                <li><span class="tag-name">map/filter/reduce</span> - Transform arrays</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// Creating arrays
+const fruits = ["apple", "banana", "orange"];
+const numbers = [1, 2, 3, 4, 5];
+
+// Adding/removing elements
+fruits.push("mango"); // Add to end
+fruits.pop(); // Remove from end
+fruits.unshift("strawberry"); // Add to start
+fruits.shift(); // Remove from start
+
+// Iteration methods
+const doubled = numbers.map(num => num * 2);
+const evens = numbers.filter(num => num % 2 === 0);
+const sum = numbers.reduce((total, num) => total + num, 0);
+
+// Finding elements
+const hasApple = fruits.includes("apple");
+const bananaIndex = fruits.indexOf("banana");</code></pre>
+                    </div>
+                </section>
+
+                <!-- Objects -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-cube me-2"></i>Objects</h2>
+                    <div class="tag-card">
+                        <p>Objects store collections of key-value pairs and more complex entities.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Object Features:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">Properties</span> - Key-value pairs</li>
+                                <li><span class="tag-name">Methods</span> - Functions as properties</li>
+                                <li><span class="tag-name">this</span> - Refers to the object</li>
+                                <li><span class="tag-name">Destructuring</span> - Extract properties</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// Object creation
+const person = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 30,
+  hobbies: ["reading", "coding"],
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+};
+
+// Accessing properties
+console.log(person.firstName); // Dot notation
+console.log(person["lastName"]); // Bracket notation
+
+// Adding/modifying
+person.email = "john@example.com";
+person.age = 31;
+
+// Object methods
+console.log(person.fullName());
+
+// Object iteration
+for (const key in person) {
+  console.log(`${key}: ${person[key]}`);
+}
+
+// Destructuring
+const { firstName, age } = person;
+console.log(firstName, age);</code></pre>
+                    </div>
+                </section>
+
+                <!-- DOM Manipulation -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-code-branch me-2"></i>DOM Manipulation</h2>
+                    <div class="tag-card">
+                        <p>The Document Object Model (DOM) represents the page as objects that JavaScript can manipulate.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Key DOM Concepts:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">Selecting Elements</span> - getElementById, querySelector, etc.</li>
+                                <li><span class="tag-name">Modifying Content</span> - textContent, innerHTML</li>
+                                <li><span class="tag-name">Changing Styles</span> - style property, classList</li>
+                                <li><span class="tag-name">Event Handling</span> - addEventListener</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// Selecting elements
+const heading = document.getElementById('main-heading');
+const boxes = document.getElementsByClassName('box');
+const firstDiv = document.querySelector('div');
+
+// Modifying content
+heading.textContent = "New Heading"; // Text only
+firstDiv.innerHTML = "&lt;strong&gt;Bold text&lt;/strong&gt;"; // Parses HTML
+
+// Changing styles
+heading.style.color = "blue";
+heading.classList.add("highlight");
+
+// Event handling
+const button = document.querySelector('button');
+button.addEventListener('click', function() {
+  console.log("Button clicked!");
+});</code></pre>
+                    </div>
+                </section>
+
+                <!-- Events -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-bolt me-2"></i>Events</h2>
+                    <div class="tag-card">
+                        <p>Events are actions that happen in the browser that JavaScript can respond to.</p>
+                        <div class="mt-3">
+                            <h5 class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-2"></i>Common Event Types:
+                            </h5>
+                            <ul>
+                                <li><span class="tag-name">Mouse Events</span> - click, mouseover, mouseout</li>
+                                <li><span class="tag-name">Keyboard Events</span> - keydown, keyup</li>
+                                <li><span class="tag-name">Form Events</span> - submit, change, focus</li>
+                                <li><span class="tag-name">Window Events</span> - load, resize, scroll</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">
+                            <i class="far fa-copy"></i> Copy
+                        </button>
+                        <pre><code>// Click event
+button.addEventListener('click', function(e) {
+  console.log("Clicked!", e.target);
+});
+
+// Form submission
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent page reload
+  console.log("Form submitted");
+});
+
+// Keyboard input
+input.addEventListener('keydown', function(e) {
+  console.log("Key pressed:", e.key);
+});
+
+// Mouse events
+box.addEventListener('mouseover', function() {
+  this.style.backgroundColor = "yellow";
+});
+
+box.addEventListener('mouseout', function() {
+  this.style.backgroundColor = "";
+});
+
+// Event delegation
+document.getElementById('list').addEventListener('click', function(e) {
+  if (e.target.tagName === 'LI') {
+    console.log("List item clicked:", e.target.textContent);
+  }
+});</code></pre>
+                    </div>
+                </section>
+
+                <!-- Summary -->
+                <section class="mb-5">
+                    <h2 class="mb-4"><i class="fas fa-clipboard-list me-2"></i>Summary</h2>
+                    <div class="mobile-steps">
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">1</span>
+                            JavaScript has variables (var, let, const), data types, and operators
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">2</span>
+                            Functions are reusable code blocks (declarations, expressions, arrow)
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">3</span>
+                            Control flow includes conditionals (if/else, switch) and loops (for, while)
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">4</span>
+                            Arrays store ordered collections, objects store key-value pairs
+                        </p>
+                        <p class="d-flex align-items-center">
+                            <span class="step-number">5</span>
+                            DOM manipulation lets you interact with and modify web pages
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Practice Exercise -->
+                <section class="mb-5 p-4 border rounded bg-light">
+                    <h3 class="mb-3"><i class="fas fa-pencil-alt me-2"></i>Practice Exercise</h3>
+                    <p>Create a JavaScript program that:</p>
+                    <ul>
+                        <li>Uses variables with different data types</li>
+                        <li>Includes functions with parameters and return values</li>
+                        <li>Manipulates arrays and objects</li>
+                        <li>Handles DOM events to modify page content</li>
+                    </ul>
+                    <button class="btn btn-primary mt-2">Download Starter Files</button>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2023 SkillCraft Web Development Course</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Copy Code Functionality -->
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.parentElement;
+            const code = codeBlock.querySelector('code').textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    button.innerHTML = '<i class="far fa-copy"></i> Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
