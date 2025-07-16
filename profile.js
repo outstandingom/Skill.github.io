@@ -346,7 +346,7 @@ function updateLessonNavigation(currentLesson) {
     }
     
     // Update next button
-    if (current === 7) {
+    if (current === 10) {
         nextBtn.textContent = 'Complete Course';
     } else {
         nextBtn.textContent = 'Next Lesson';
