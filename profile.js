@@ -241,8 +241,8 @@ const firebaseConfig = {
             if (e.target.closest('.course-card') || e.target.closest('.view-course-btn')) {
                 e.preventDefault();
                 const courseCard = e.target.closest('.course-card');
-                const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
-                                 courseCard.classList.contains('cyber') ? 'cyber' : 'finance';
+                const courseId = courseCard.classList.contains('web-dev') ? 'course1' : 
+                 courseCard.classList.contains('cyber') ? 'course2' : 'course3';
                 
                 // Hide all tabs and show the selected course content
                 document.querySelectorAll('.tab-content').forEach(tab => {
