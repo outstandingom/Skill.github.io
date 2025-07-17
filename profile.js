@@ -184,26 +184,7 @@ const firebaseConfig = {
                     updates.photoURL = photoURL;
                     
                     // Update auth profile photo
-                    await currentUser.updateProfile({
-                        photoURL: photoURL
-                    });
-                }
-                
-                // Update Firestore
-                await db.collection('users').doc(currentUser.uid).set(updates, { merge: true });
-                
-                // Update UI
-                updateProfileUI(currentUser, { ...currentUserData, ...updates });
-                
-                // Close modal
-                editProfileModal.hide();
-                
-                // Show success message
-                alert('Profile updated successfully!');
-            } catch (error) {
-                console.error('Error updating profile:', error);
-                alert('Error updating profile. Please try again.');
-            } finally {
+                    await currentUser.7
                 // Reset button state
                 saveChangesBtn.disabled = false;
                 saveChangesBtn.textContent = 'Save Changes';
@@ -242,12 +223,10 @@ const firebaseConfig = {
                 e.preventDefault();
                 const courseCard = e.target.closest('.course-card');
                 // In the click event handler for course cards, change this:
-
-
-// To this:
-                const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
+                 const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
                  courseCard.classList.contains('cyber') ? 'cyber' : 
-                 courseCard.classList.contains('finance') ? 'finance' : '';
+                 courseCard.classList.contains('finance') ? 'finance' : ''; 
+                
                 
                 // Hide all tabs and show the selected course content
                 document.querySelectorAll('.tab-content').forEach(tab => {
