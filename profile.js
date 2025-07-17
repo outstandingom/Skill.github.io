@@ -294,24 +294,28 @@ const firebaseConfig = {
         });
 
         function updateCourseProgress(courseId) {
-            const user = auth.currentUser;
-            if (!user) return;
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    db.collection('users').doc(user.uid).get().then(doc => {
+        if (doc.exists) {
+            const userData = doc.data();
+            const progressKey = `progress_${
+                courseId === 'web' ? 'course1' : 
+                courseId === 'cyber' ? 'course2' : 
+                'course3'  // finance
+            }`;
+            const progress = userData[progressKey] || 0;
             
-            db.collection('users').doc(user.uid).get().then(doc => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    const progressKey = `progress_${courseId === 'web' ? 'course1' : courseId === 'cyber' ? 'course2' : 'course3'}`;
-                    const progress = userData[progressKey] || 0;
-                    
-                    // Update progress bar
-                    const progressBar = document.getElementById(`${courseId}ProgressBar`);
-                    const progressText = document.getElementById(`${courseId}ProgressText`);
-                    if (progressBar && progressText) {
-                        progressBar.style.width = `${progress}%`;
-                        progressText.textContent = `${progress}% Complete`;
-                    }
-                }
-            });
+            // Update progress bar
+            const progressBar = document.getElementById(`${courseId}ProgressBar`);
+            const progressText = document.getElementById(`${courseId}ProgressText`);
+            if (progressBar && progressText) {
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${progress}% Complete`;
+            }
+        }
+    });
         }
 
         // Your original function (unchanged)
