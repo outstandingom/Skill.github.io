@@ -286,100 +286,21 @@ scripts) ... -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <!-- Your Profile JS -->
-    <script src="profile.js"></script>
-
+    <script src="profile.js"></script> 
     <script>
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
-        authDomain: "skill-craft-79597.firebaseapp.com",
-        projectId: "skill-craft-79597",
-        storageBucket: "skill-craft-79597.appspot.com",
-        messagingSenderId: "916636695046",
-        appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
-        measurementId: "G-3MM50DH5SY"
-    };
+        // Firebase configuration
+    
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
-    // Handle enroll button clicks
-    document.querySelectorAll('.enroll-btn').forEach(button => {
-        button.addEventListener('click', async function() {
-            const course = this.dataset.course;
-            const user = auth.currentUser;
-            const originalText = this.textContent;
-            
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
-
-            if (course === 'web') {
-                try {
-                    // Show loading state
-                    this.disabled = true;
-                    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
-
-                    const courseId = 'course1';
-                    
-                    await db.collection('users').doc(user.uid).update({
-                        courses: firebase.firestore.FieldValue.arrayUnion(courseId),
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-
+        // Handle enroll button clicks
+        document.querySelectorAll('.enroll-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const course = this.dataset.course;
+                if (course === 'web') {
+                    // Only web development course is available for now
                     window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScjuQQOBOnPyvhjIL-_3VwGyMBKLb8vPT1y3LF76U8o5Oanpg/viewform?usp=header';
-                    
-                } catch (error) {
-                    console.error("Error enrolling in course:", error);
-                    
-                    if (error.code === 'not-found') {
-                        console.error("User document not found");
-                        alert("Your account information couldn't be found. Please contact support.");
-                    } else {
-                        alert("An error occurred while enrolling. Please try again.");
-                    }
-                    
-                    this.disabled = false;
-                    this.textContent = originalText;
                 }
-            }
+            });
         });
-    });
-
-    // Check authentication state and course enrollment status
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            db.collection('users').doc(user.uid).get().then((doc) => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    const courses = userData.courses || [];
-                    
-                    if (courses.includes('course1')) {
-                        const webDevBtn = document.querySelector('.enroll-btn[data-course="web"]');
-                        if (webDevBtn) {
-                            webDevBtn.textContent = 'Go to Course';
-                            webDevBtn.classList.remove('btn-primary');
-                            webDevBtn.classList.add('btn-success');
-                            webDevBtn.addEventListener('click', function(e) {
-                                e.preventDefault();
-                                window.location.href = 'profile.html#courses';
-                            });
-                        }
-                    }
-                }
-            });
-        } else {
-            document.querySelectorAll('.enroll-btn').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.location.href = 'login.html?redirect=courses';
-                });
-            });
-        }
-    });
     </script>
     
     
