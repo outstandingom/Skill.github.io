@@ -289,6 +289,111 @@
     <script src="profile.js">
                                                             
     </script>
+
+    <script>
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
+        authDomain: "skill-craft-79597.firebaseapp.com",
+        projectId: "skill-craft-79597",
+        storageBucket: "skill-craft-79597.firebasestorage.app",
+        messagingSenderId: "916636695046",
+        appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
+        measurementId: "G-3MM50DH5SY"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Handle enroll button clicks
+    document.querySelectorAll('.enroll-btn').forEach(button => {
+        button.addEventListener('click', async function() {
+            const course = this.dataset.course;
+            const user = auth.currentUser;
+            
+            if (!user) {
+                // Redirect to login if user is not authenticated
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (course === 'web') {
+                try {
+                    // Show loading state
+                    const originalText = this.textContent;
+                    this.disabled = true;
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+
+                    // Determine the course ID to add (course1 for web development)
+                    const courseId = 'course1';
+                    
+                    // Update the user's document to add the course
+                    await db.collection('users').doc(user.uid).update({
+                        courses: firebase.firestore.FieldValue.arrayUnion(courseId),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+
+                    // Redirect to payment form after successful update
+                    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScjuQQOBOnPyvhjIL-_3VwGyMBKLb8vPT1y3LF76U8o5Oanpg/viewform?usp=header';
+                    
+                } catch (error) {
+                    console.error("Error enrolling in course:", error);
+                    
+                    // Check if the error is because the course is already added
+                    if (error.code === 'not-found') {
+                        // User document doesn't exist (shouldn't happen per your note)
+                        console.error("User document not found");
+                        alert("Your account information couldn't be found. Please contact support.");
+                    } else {
+                        alert("An error occurred while enrolling. Please try again.");
+                    }
+                    
+                    // Reset button state
+                    this.disabled = false;
+                    this.textContent = originalText;
+                }
+            }
+        });
+    });
+
+    // Check authentication state and course enrollment status
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in, check their enrolled courses
+            db.collection('users').doc(user.uid).get().then((doc) => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const courses = userData.courses || [];
+                    
+                    // Update UI based on enrolled courses
+                    if (courses.includes('course1')) {
+                        // User already has web development course
+                        const webDevBtn = document.querySelector('.enroll-btn[data-course="web"]');
+                        if (webDevBtn) {
+                            webDevBtn.textContent = 'Go to Course';
+                            webDevBtn.classList.remove('btn-primary');
+                            webDevBtn.classList.add('btn-success');
+                            webDevBtn.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                window.location.href = 'profile.html#courses';
+                            });
+                        }
+                    }
+                }
+            });
+        } else {
+            // User is not signed in, update buttons to redirect to login
+            document.querySelectorAll('.enroll-btn').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'login.html?redirect=courses';
+                });
+            });
+        }
+    });
+    </script>
     <script>
         // Firebase configuration
     
