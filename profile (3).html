@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillCraft - My Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-light: #e6e9ff;
+            --secondary: #3a0ca3;
+            --danger: #f72585;
+            --danger-light: #ffebf2;
+            --info: #4cc9f0;
+            --info-light: #e6f9ff;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .profile-nav {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .profile-nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .profile-nav-item:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+        
+        .profile-nav-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: var(--primary-light);
+        }
+        
+        .profile-detail {
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-detail-label {
+            font-size: 0.85rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .profile-detail-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .course-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .course-img {
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .web-dev {
+            border-top: 4px solid var(--primary);
+        }
+        
+        .cyber {
+            border-top: 4px solid var(--danger);
+        }
+        
+        .finance {
+            border-top: 4px solid var(--info);
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 4px;
+        }
+        
+        .progress-bar {
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Course Content Styles */
+        .course-header {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .lessons-sidebar {
+            position: sticky;
+            top: 20px;
+        }
+        
+        .lesson-link.active {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .lesson-section {
+            display: none;
+        }
+        
+        .lesson-section.active {
+            display: block;
+        }
+        
+        /* YouTube embed styling to prevent recommendations */
+        .lesson-content iframe {
+            width: 100%;
+            height: 170px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .back-to-courses-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-courses-btn:hover {
+            transform: translateX(-3px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#instructor">Instructor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="profile.html">Profile</a>
+                    </li>
+                </ul>
+                <button id="logoutBtn" class="btn btn-outline-danger ms-lg-3 px-4">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="container text-center">
+            <img id="profileImage" src="https://i.ibb.co/qMyWPDyx/images-8.jpg" alt="Profile" class="profile-image mb-3">
+            <h2 id="profileName" class="fw-bold mb-2">User Name</h2>
+            <p id="profileEmail" class="mb-0">user@example.com</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Profile Navigation -->
+                <div class="profile-nav">
+                    <div class="profile-nav-item active" data-tab="profile">Profile</div>
+                    <div class="profile-nav-item" data-tab="courses">My Courses</div>
+                    <div class="profile-nav-item" data-tab="settings">Settings</div>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <!-- Profile Tab -->
+                 <div id="profileTab" class="tab-content active">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Personal Information</h4>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Full Name</div>
+                                    <div id="profileFullName" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Email</div>
+                                    <div id="profileEmailDetail" class="profile-detail-value">Not provided</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">Member Since</div>
+                                    <div id="profileJoinDate" class="profile-detail-value">Unknown</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="profile-detail">
+                                    <div class="profile-detail-label">User ID</div>
+                                    <div id="profileUserId" class="profile-detail-value">Loading...</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                <i class="fas fa-edit me-2"></i>Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Security</h4>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-shield-alt me-2"></i> Last login: <span id="lastLogin">Unknown</span>
+                        </div>
+                        
+                        <div class="d-flex gap-3">
+                            <button id="changePasswordBtn" class="btn btn-outline-danger">
+                                <i class="fas fa-key me-2"></i>Change Password
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                                <i class="fas fa-envelope me-2"></i>Update Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Courses Tab -->
+                <div id="coursesTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">My Courses</h4>
+                        <p class="text-muted mb-4">Your enrolled courses and progress</p>
+                        
+                        <div class="row g-4">
+                            <!-- Courses will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div id="settingsTab" class="tab-content">
+                    <div class="profile-card">
+                        <h4 class="fw-bold mb-4">Account Settings</h4>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Notifications</h5>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                            </div>
+                            <div class="form-check form-switch mb-3">
+                                <input class="form-check-input" type="checkbox" id="courseUpdates" checked>
+                                <label class="form-check-label" for="courseUpdates">Course Updates</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="promotionalOffers">
+                                <label class="form-check-label" for="promotionalOffers">Promotional Offers</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-3">Privacy Settings</h5>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePublic" checked>
+                                <label class="form-check-label" for="profilePublic">Public Profile</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="profileVisibility" id="profilePrivate">
+                                <label class="form-check-label" for="profilePrivate">Private Profile</label>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-danger">
+                            <h5 class="fw-bold mb-2">Danger Zone</h5>
+                            <p class="mb-3">These actions are irreversible. Proceed with caution.</p>
+                            <button class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash-alt me-2"></i>Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web Development Course Content -->
+    <div id="webCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Web Development</h2>
+                        <p class="text-muted mb-0">Master HTML, CSS, JavaScript and modern frameworks</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="webProgressBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted" id="webProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: HTML Fundamentals</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: CSS Styling</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: JavaScript Basics & DOM</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Javascript part 2</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: Javascript part 3</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Javascript part 4</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Creating website using deepseek </a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="8">Lesson 8: Github Account & hosting</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="9">Lesson 9: Firebase Intigration </a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="10">Lesson 10: SEO ( SEARCH ENGINE OPTIMIZATION </a>
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">HTML Fundamentals</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/nLfk4dJ7o_I?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages.</p>
+                                <ul>
+                                    <br>
+                                    <li>HTML describes the structure of a web page</li>
+                                    <li>HTML consists of a series of elements</li>
+                                    <li>HTML elements tell the browser how to display the content</li>
+                                    <li>HTML elements are represented by tags</li>
+                                    <li>HTML elements are represented by tags</li>
+                                </ul>
+                                  <button class="btn btn-primary mt-2" onclick="window.location.href='html.html'">Notes</button>
+                                <br>
+                            <br>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Always include the DOCTYPE declaration at the beginning of your HTML documents.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 2 Content -->
+                        <div class="lesson-section" data-lesson="2">
+                            <h3 class="fw-bold mb-3">CSS Styling</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/EHo8-uIfsDA?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>CSS (Cascading Style Sheets) is used to style and layout web pages.</p>
+                                <ul>
+                                    <li>CSS describes how HTML elements should be displayed</li>
+                                    <li>CSS saves a lot of work by controlling multiple web pages at once</li>
+                                    <li>External stylesheets are stored in CSS files</li>
+                                </ul>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='css.html'">Notes</button>
+                                <br>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Use external stylesheets for better maintainability.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 3 Content -->
+                        <div class="lesson-section" data-lesson="3">
+                            <h3 class="fw-bold mb-3">JavaScript Basics & Dom manipulation</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/wUlH4RgmsOc?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>JavaScript is a programming language that adds interactivity to your website.</p>
+                                <ul>
+                                    <li>JavaScript can change HTML content</li>
+                                    <li>JavaScript can change HTML attributes</li>
+                                    <li>JavaScript can change CSS styles</li>
+                                    <li>JavaScript can validate data</li>
+                                    <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 4 Content -->
+                        <div class="lesson-section" data-lesson="4">
+                            <h3 class="fw-bold mb-3">Javascript part 2</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/T_ljSbUMpHo?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Variable & scope is tye most important things in function and the most important thing in database also </p>
+                                <ul>
+                                    <li>Variables & Scope</li>
+                                    <li>Scope & hoisting </li>
+                                    <li> you hav eto cross chess Function name </li>
+                                    <li>var let const </li>
+                                </ul>
+                                <br>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 5 Content -->
+                        <div class="lesson-section" data-lesson="5">
+                            <h3 class="fw-bold mb-3">Javascript part 3</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/ASo52it9wK0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Arrays & Objects </p>
+                                <ul>
+                                    <li>Creating and accessing arrays</li>
+                                    <li>Useful array methods: push(), pop(), map(), filter(), find()</li>
+                                    <li>Creating and using objects </li>
+                                    <li>Accessing object properties & methods </li>
+                                </ul>
+                                <br>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 6 Content -->
+                        <div class="lesson-section" data-lesson="6">
+                            <h3 class="fw-bold mb-3"> javascript part 4</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/GpZkZ47qQ2o?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Creating website using deepseek </h4>
+                                <p>DOM Manipulation</p>
+                                <ul>
+                                    <li>Selecting elements (getElementById, querySelector, etc.)</li>
+                                    <li>Changing content (innerHTML, textContent )</li>
+                                    <li>Modifying styles dynamically</li>
+                                    <li>Creating, adding, and removing elements
+                                    </li>
+                                    <li>Adding event listeners (click, submit, etc.)</li>
+                                    <li>Accessing form input values</li>    
+                                    <li>Basic form validation (e.g., empty fields, email format)</li>
+                                     <li>Showing error and success messages </li>
+                                    <br>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 7 Content -->
+
+                        <div class="lesson-section" data-lesson="7">
+                            <h3 class="fw-bold mb-3"> Creating website using deepseek</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/_N2TZylLFYY?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Github account creation</h4>
+                                <p>Always give a detailed prompt ti deepseek what you want use in website as much possible try to give reference  code or design  </p>
+                                          <ul>
+                                    <li>Make seprate files for html css and java script </li>
+                                    <li>Divide your code into small parts to get More presise code</li>
+                                    <li> First give information that what you had created or what you wabt create</li>
+                                </ul>
+                            </div>
+                        </div>
+                       <!--   8 tth video -->
+         
+                        <div class="lesson-section" data-lesson="8">
+                            <h3 class="fw-bold mb-3"> Github account & Hosting</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/N6Q58xQDr0M?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">GitHub account & hosting</h4>
+                                <p>Github is a platform where you can get free hosting fir your website you can you can use it for managing your code abd see others code easily best for working in team or evan you can run on your mobile</p>
+                                <ul>
+                                    <li>Make sure that your repository name end with .github.io </li>
+                                    <li> index.html file  is tge home page of your file it should present in your repo</li>
+                                    <li>For creating public Link maje sure that you have yml is present in you repo</li>
+                                </ul>
+                            </div>
+                        </div>
+
+            <!---++ 9 th lesson-->
+                            <div class="lesson-section" data-lesson="9">
+                            <h3 class="fw-bold mb-3"> Firebase intigration</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/N6Q58xQDr0M?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">firebase intigration </h4>
+                                <p></p>
+                                <ul>
+                                    <li>choose test mode while creating project</li>
+                                    <li> For authentication your GitHub nane should add in you auth setting like username.github.io</li>
+                                    <li>Make sure firebase sdk has added in tour html code </li>
+                                </ul>
+                            </div>
+                    </div>
+
+                        
+                        <!--     10th video -->
+                        <div class="lesson-section" data-lesson="10">
+                            <h3 class="fw-bold mb-3">Search engine Optimization</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/_N2TZylLFYY?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Search engines optimization</h4>
+                                <p> </p>
+                                <ul>
+                                    <li>Your sitemap should be added in your github repo</li>
+                                    <li>Try to use keywords in your Website in h1 ,h2 abd h3 </li>
+                                    <li>your most searchbke keyword should be added in yougr title tag</li>
+                                    <li>Never delete xml file from GitHub repo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-primary prev-lesson-btn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous Lesson
+                        </button>
+                        <button class="btn btn-primary next-lesson-btn">
+                            Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+             
+                    <!-- Cyber Security Course Content -->
+    <div id="cyberCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4" style="border-left-color: var(--danger);">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Cyber Security</h2>
+                        <p class="text-muted mb-0">Learn to protect systems from digital attacks</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="cyberProgressBar" style="width: 0%; background-color: var(--danger);"></div>
+                        </div>
+                        <small class="text-muted" id="cyberProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: Introduction </a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: Installing termux</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: Holehe tutorial</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Hound tutorial</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: Zphisher tutorial</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Security Policies</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Final Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">Introduction</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/RAgy95XLcjg?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks.</p>
+                                <ul>
+                                    <li>Understand the CIA triad (Confidentiality, Integrity, Availability)</li>
+                                    <li>Learn about common threats and vulnerabilities</li>
+                                    <li>Explore security principles and best practices</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Lesson 2 Content -->
+                        <div class="lesson-section" data-lesson="2">
+                            <h3 class="fw-bold mb-3">Installing termux</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/JR5CiEeN3oE?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>CSS (Cascading Style Sheets) is used to style and layout web pages.</p>
+                                <ul>
+                                    <li>CSS describes how HTML elements should be displayed</li>
+                                    <li>CSS saves a lot of work by controlling multiple web pages at once</li>
+                                    <li>External stylesheets are stored in CSS files</li>
+                                </ul>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='css.html'">Notes</button>
+                                <br>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-lightbulb me-2"></i> <strong>Tip:</strong> Use external stylesheets for better maintainability.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 3 Content -->
+                        <div class="lesson-section" data-lesson="3">
+                            <h3 class="fw-bold mb-3">Holehe tutorial </h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/VgmAa9Gp2fM?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>JavaScript is a programming language that adds interactivity to your website.</p>
+                                <ul>
+                                    <li>JavaScript can change HTML content</li>
+                                    <li>JavaScript can change HTML attributes</li>
+                                    <li>JavaScript can change CSS styles</li>
+                                    <li>JavaScript can validate data</li>
+                                    <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 4 Content -->
+                        <div class="lesson-section" data-lesson="4">
+                            <h3 class="fw-bold mb-3">Hound tutorial</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/avLZgxWrJ_A?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Variable & scope is tye most important things in function and the most important thing in database also </p>
+                                <ul>
+                                    <li>Variables & Scope</li>
+                                    <li>Scope & hoisting </li>
+                                    <li> you hav eto cross chess Function name </li>
+                                    <li>var let const </li>
+                                </ul>
+                                <br>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 5 Content -->
+                        <div class="lesson-section" data-lesson="5">
+                            <h3 class="fw-bold mb-3">Zphisher tutorial</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/YKOQ8NE5xHk?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Arrays & Objects </p>
+                                <ul>
+                                    <li>Creating and accessing arrays</li>
+                                    <li>Useful array methods: push(), pop(), map(), filter(), find()</li>
+                                    <li>Creating and using objects </li>
+                                    <li>Accessing object properties & methods </li>
+                                </ul>
+                                <br>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 6 Content -->
+                        <div class="lesson-section" data-lesson="6">
+                            <h3 class="fw-bold mb-3"> javascript part 4</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/avLZgxWrJ_A?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Creating website using deepseek </h4>
+                                <p>DOM Manipulation</p>
+                                <ul>
+                                    <li>Selecting elements (getElementById, querySelector, etc.)</li>
+                                    <li>Changing content (innerHTML, textContent )</li>
+                                    <li>Modifying styles dynamically</li>
+                                    <li>Creating, adding, and removing elements
+                                    </li>
+                                    <li>Adding event listeners (click, submit, etc.)</li>
+                                    <li>Accessing form input values</li>    
+                                    <li>Basic form validation (e.g., empty fields, email format)</li>
+                                     <li>Showing error and success messages </li>
+                                    <br>
+                                <button class="btn btn-primary mt-2" onclick="window.location.href='java.html'">Notes</button>
+                                <br>
+                            </div>
+                        </div>
+                        
+                        <!-- Lesson 7 Content -->
+
+                        <div class="lesson-section" data-lesson="7">
+                            <h3 class="fw-bold mb-3"> Creating website using deepseek</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/_N2TZylLFYY?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Github account creation</h4>
+                                <p>Always give a detailed prompt ti deepseek what you want use in website as much possible try to give reference  code or design  </p>
+                                          <ul>
+                                    <li>Make seprate files for html css and java script </li>
+                                    <li>Divide your code into small parts to get More presise code</li>
+                                    <li> First give information that what you had created or what you wabt create</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Add similar sections for lessons 2-7 -->
+                        
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-danger prev-lesson-btn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous Lesson
+                        </button>
+                        <button class="btn btn-danger next-lesson-btn">
+                            Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Trading Course Content -->
+    <div id="financeCourseContent" class="tab-content" style="display: none;">
+        <div class="container py-4">
+            <button class="btn btn-outline-primary mb-4 back-to-courses-btn">
+                <i class="fas fa-arrow-left me-2"></i>Back to My Courses
+            </button>
+            
+            <div class="course-header bg-white p-4 rounded-3 shadow-sm mb-4" style="border-left-color: var(--info);">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h2 class="fw-bold mb-2">Financial Tradi</h2>
+                        <p class="text-muted mb-0">Master the art of trading in financial markets</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="progress mb-2">
+                            <div class="progress-bar" id="financeProgressBar" style="width: 0%; background-color: var(--info);"></div>
+                        </div>
+                        <small class="text-muted" id="financeProgressText">0% Complete</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="lessons-sidebar bg-white rounded-3 shadow-sm p-3 mb-4">
+                        <h5 class="fw-bold mb-3">Course Lessons</h5>
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action lesson-link active" data-lesson="1">Lesson 1: Market Basics</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="2">Lesson 2: Technical Analysis</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="3">Lesson 3: Fundamental Analysis</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="4">Lesson 4: Trading Strategies</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="5">Lesson 5: Risk Management</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="6">Lesson 6: Trading Psychology</a>
+                            <a href="#" class="list-group-item list-group-item-action lesson-link" data-lesson="7">Lesson 7: Final Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-9">
+                    <div class="lesson-content bg-white rounded-3 shadow-sm p-4 mb-4">
+                        <!-- Lesson 1 Content -->
+                        <div class="lesson-section active" data-lesson="1">
+                            <h3 class="fw-bold mb-3">Market Basics</h3>
+                            <div class="ratio ratio-16x9 mb-4">
+                                <iframe src="https://www.youtube.com/embed/15DGziMIjU0?rel=0&modestbranding=1&controls=1" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen></iframe>
+                            </div>
+                            <div class="lesson-notes">
+                                <h4 class="fw-bold mb-3">Lesson Notes</h4>
+                                <p>Financial markets are where traders buy and sell assets such as stocks, bonds, currencies, and commodities.</p>
+                                <ul>
+                                    <li>Understand different types of markets</li>
+                                    <li>Learn about market participants</li>
+                                    <li>Explore order types and execution</li>
+                                    <li>Understand market indicators</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Add similar sections for lessons 2-7 -->
+                        
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-info prev-lesson-btn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i>Previous Lesson
+                        </button>
+                        <button class="btn btn-info text-white next-lesson-btn">
+                            Next Lesson <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="editFullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="editFullName" placeholder="Your full name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhoto" class="form-label">Profile Photo</label>
+                            <input type="file" class="form-control" id="editPhoto">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="editPhone" placeholder="+1 (123) 456-7890">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="editProfileBtn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark text-white mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center">
+                        <i class="fas fa-graduation-cap me-2 text-primary"></i>SkillCraft
+                    </h5>
+                    <p class="mb-4">Premium online courses to help you master in-demand digital skills and transform your career.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-youtube fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Courses</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Web Development</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Cybersecurity</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Financial Trading</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">All Courses</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Testimonials</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-4">
+                    <h5 class="fw-bold mb-3">Stay Updated</h5>
+                    <p class="text-white-50 mb-3">Subscribe to our newsletter for course updates and offers.</p>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Your email">
+                        <button class="btn btn-primary" type="button">Subscribe</button>
+            </div>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 text-white-50">&copy; 2023 SkillCraft. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+                    <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- Your Profile JS -->
+    <script src="profile.js">
+                                                            
+    </script>
+</body>
+</html>
