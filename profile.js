@@ -230,105 +230,117 @@ const firebaseConfig = {
                 
                 // Load courses if courses tab is clicked
                 if (tabId === 'coursesTab') {
-                    loadUserCourses();
+                    oadUserCourses();
                 }
             });
         });
 
         // Handle course card clicks
-        document.addEventListener('click', function(e) {
-            // Check if a course card was clicked
-            if (e.target.closest('.course-card') || e.target.closest('.view-course-btn')) {
-                e.preventDefault();
-                const courseCard = e.target.closest('.course-card');
-                const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
-                                 courseCard.classList.contains('cyber') ? 'cyber' : 'finance';
-                
-                // Hide all tabs and show the selected course content
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.style.display = 'none';
-                    tab.classList.remove('active');
-                });
-                document.getElementById(`${courseId}CourseContent`).style.display = 'block';
-                document.getElementById(`${courseId}CourseContent`).classList.add('active');
-                
-                // Update progress display
-                updateCourseProgress(courseId);
-            }
-            
-            // Back to courses button
-            if (e.target.closest('.back-to-courses-btn')) {
-                e.preventDefault();
-                document.querySelectorAll('.tab-content').forEach(tab => {
-                    tab.style.display = 'none';
-                    tab.classList.remove('active');
-                });
-                document.getElementById('coursesTab').style.display = 'block';
-                document.getElementById('coursesTab').classList.add('active');
-                
-                // Update navigation tab
-                document.querySelectorAll('.profile-nav-item').forEach(tab => {
-                    tab.classList.remove('active');
-                });
-                document.querySelector('.profile-nav-item[data-tab="courses"]').classList.add('active');
-            }
-            
-            // Lesson navigation
-            if (e.target.closest('.lesson-link')) {
-                e.preventDefault();
-                const lessonLink = e.target.closest('.lesson-link');
-                const lessonNumber = lessonLink.dataset.lesson;
-                
-                // Update active lesson in sidebar
-                document.querySelectorAll('.lesson-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                lessonLink.classList.add('active');
-                
-                // Show corresponding lesson content
-                document.querySelectorAll('.lesson-section').forEach(section => {
-                    section.style.display = 'none';
-                });
-                document.querySelector(`.lesson-section[data-lesson="${lessonNumber}"]`).style.display = 'block';
-                
-                // Update navigation buttons
-                updateLessonNavigation(lessonNumber);
-            }
-            
-            // Previous/Next lesson buttons
-            if (e.target.closest('.prev-lesson-btn') && !e.target.closest('.prev-lesson-btn').disabled) {
-                e.preventDefault();
-                const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
-                document.querySelector(`.lesson-link[data-lesson="${parseInt(currentLesson) - 1}"]`).click();
-            }
-            
-            if (e.target.closest('.next-lesson-btn') && e.target.closest('.next-lesson-btn').textContent.includes('Next')) {
-                e.preventDefault();
-                const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
-                document.querySelector(`.lesson-link[data-lesson="${parseInt(currentLesson) + 1}"]`).click();
-            }
+     document.addEventListener('click', function(e) {
+    // Check if a course card was clicked
+    if (e.target.closest('.course-card') || e.target.closest('.view-course-btn')) {
+        e.preventDefault();
+        const courseCard = e.target.closest('.course-card');
+        const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
+                         courseCard.classList.contains('cyber') ? 'cyber' : 'finance';
+        
+        // Hide all tabs and show the selected course content
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.style.display = 'none';
+            tab.classList.remove('active');
         });
+        document.getElementById(`${courseId}CourseContent`).style.display = 'block';
+        document.getElementById(`${courseId}CourseContent`).classList.add('active');
+        
+        // Update progress display
+        updateCourseProgress(courseId);
+    }
 
-        function updateCourseProgress(courseId) {
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            db.collection('users').doc(user.uid).get().then(doc => {
-                if (doc.exists) {
-                    const userData = doc.data();
-                    const progressKey = `progress_${courseId === 'web' ? 'course1' : courseId === 'cyber' ? 'course2' : 'course3'}`;
-                    const progress = userData[progressKey] || 0;
-                    
-                    // Update progress bar
-                    const progressBar = document.getElementById(`${courseId}ProgressBar`);
-                    const progressText = document.getElementById(`${courseId}ProgressText`);
-                    if (progressBar && progressText) {
-                        progressBar.style.width = `${progress}%`;
-                        progressText.textContent = `${progress}% Complete`;
-                    }
-                }
-            });
+    // Back to courses button
+    if (e.target.closest('.back-to-courses-btn')) {
+        e.preventDefault();
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.style.display = 'none';
+            tab.classList.remove('active');
+        });
+        document.getElementById('coursesTab').style.display = 'block';
+        document.getElementById('coursesTab').classList.add('active');
+        
+        // Update navigation tab
+        document.querySelectorAll('.profile-nav-item').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.querySelector('.profile-nav-item[data-tab="courses"]').classList.add('active');
+    }
+    
+    // Lesson navigation - General handler (for all courses)
+    if (e.target.closest('.lesson-link')) {
+        e.preventDefault();
+        const lessonLink = e.target.closest('.lesson-link');
+        const lessonNumber = lessonLink.dataset.lesson;
+        
+        // Find the parent course content container
+        const courseContent = lessonLink.closest('.tab-content');
+        
+        // Update active lesson in sidebar
+        courseContent.querySelectorAll('.lesson-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        lessonLink.classList.add('active');
+        
+        // Show corresponding lesson content within the same course
+        courseContent.querySelectorAll('.lesson-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        courseContent.querySelector(`.lesson-section[data-lesson="${lessonNumber}"]`).style.display = 'block';
+        
+        // Update navigation buttons
+        updateLessonNavigation(lessonNumber);
+    }
+    
+    // Previous/Next lesson buttons
+    if (e.target.closest('.prev-lesson-btn') && !e.target.closest('.prev-lesson-btn').disabled) {
+        e.preventDefault();
+        const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
+        const prevLesson = parseInt(currentLesson) - 1;
+        if (prevLesson >= 1) {
+            document.querySelector(`.lesson-link[data-lesson="${prevLesson}"]`).click();
         }
+    }
+    
+    if (e.target.closest('.next-lesson-btn') && e.target.closest('.next-lesson-btn').textContent.includes('Next')) {
+        e.preventDefault();
+        const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
+        const nextLesson = parseInt(currentLesson) + 1;
+        // Check if next lesson exists
+        if (document.querySelector(`.lesson-link[data-lesson="${nextLesson}"]`)) {
+            document.querySelector(`.lesson-link[data-lesson="${nextLesson}"]`).click();
+        }
+    }
+});
+
+function updateCourseProgress(courseId) {
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    db.collection('users').doc(user.uid).get().then(doc => {
+        if (doc.exists) {
+            const userData = doc.data();
+            const progressKey = `progress_${courseId === 'web' ? 'course1' : courseId === 'cyber' ? 'course2' : 'course3'}`;
+            const progress = userData[progressKey] || 0;
+            
+            // Update progress bar
+            const progressBar = document.getElementById(`${courseId}ProgressBar`);
+            const progressText = document.getElementById(`${courseId}ProgressText`);
+            if (progressBar && progressText) {
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${progress}% Complete`;
+            }
+        }
+    });
+}
+
+        
 
         // Your original function (unchanged)
 
