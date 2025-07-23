@@ -241,9 +241,8 @@ const firebaseConfig = {
             if (e.target.closest('.course-card') || e.target.closest('.view-course-btn')) {
                 e.preventDefault();
                 const courseCard = e.target.closest('.course-card');
-                const courseId = courseCard.classList.contains('web-dev') ? 'web' : 
-                                 courseCard.classList.contains('cyber') ? 'cyber' : 'finance';
-                
+                const courseId = courseCard.id;
+            // Directly use the ID (e.g., "web", "cyber", "finance")
                 // Hide all tabs and show the selected course content
                 document.querySelectorAll('.tab-content').forEach(tab => {
                     tab.style.display = 'none';
@@ -302,8 +301,15 @@ const firebaseConfig = {
                 document.querySelector(`.lesson-link[data-lesson="${parseInt(currentLesson) - 1}"]`).click();
             }
             
-            if (e.target.closest('.next-lesson-btn') && e.target.closest('.next-lesson-btn').textContent.includes('Next')) {
-                e.preventDefault();
+
+                    if (e.target.closest('.next-lesson-btn') && !e.target.closest('.next-lesson-btn').disabled) {
+    const currentLesson = parseInt(document.querySelector('.lesson-link.active').dataset.lesson);
+    const totalLessons = document.querySelectorAll('.lesson-link').length;
+    
+    if (currentLesson < totalLessons) {
+        document.querySelector(`.lesson-link[data-lesson="${currentLesson + 1}"]`).click();
+    }
+                    }
                 const currentLesson = document.querySelector('.lesson-link.active').dataset.lesson;
                 document.querySelector(`.lesson-link[data-lesson="${parseInt(currentLesson) + 1}"]`).click();
             }
