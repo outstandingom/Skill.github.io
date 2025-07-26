@@ -281,27 +281,75 @@ scripts) ... -->
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-    <!-- Your Profile JS -->
-    <script src="profile.js"></script> 
-    <script>
-        // Firebase configuration
-    
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-        // Handle enroll button clicks
+    const firebaseConfig = {
+        apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
+        authDomain: "skill-craft-79597.firebaseapp.com",
+        projectId: "skill-craft-79597",
+        storageBucket: "skill-craft-79597.appspot.com",
+        messagingSenderId: "916636695046",
+        appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
+        measurementId: "G-3MM50DH5SY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    let currentUser = null;
+    let enrollButtonsInitialized = false;
+
+    auth.onAuthStateChanged((user) => {
+        currentUser = user;
+        if (user) console.log("User authenticated:", user.uid);
+        setupEnrollButtons();
+    });
+
+    function setupEnrollButtons() {
+        if (enrollButtonsInitialized) return;
+        
         document.querySelectorAll('.enroll-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const course = this.dataset.course;
-                if (course === 'web') {
-                    // Only web development course is available for now
-                    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScjuQQOBOnPyvhjIL-_3VwGyMBKLb8vPT1y3LF76U8o5Oanpg/viewform?usp=header';
-                }
-            });
+            button.addEventListener('click', handleEnrollClick);
         });
-    </script>
+        
+        enrollButtonsInitialized = true;
+    }
+
+    async function handleEnrollClick() {
+        if (!currentUser) {
+            alert('Please login first to enroll in courses');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const button = this;
+        button.disabled = true;
+        button.innerHTML = '<span class="spinner"></span> Enrolling...';
+
+        try {
+            const course = this.dataset.course;
+            if (course === 'web') {
+                await db.collection('enrollments').add({
+                    userId: currentUser.uid,
+                    course: 'web',
+                    timestamp: new Date()
+                });
+                window.location.href = 'https://docs.google.com/forms/d/e/...';
+            }
+        } catch (error) {
+            console.error("Enrollment failed:", error);
+            button.disabled = false;
+            button.textContent = 'Enroll Now';
+            alert("Failed to enroll. Please try again.");
+        }
+    }
+        </script>
     
     
 </body>
