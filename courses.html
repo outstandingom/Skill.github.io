@@ -289,18 +289,67 @@ scripts) ... -->
     <script src="profile.js"></script> 
     <script>
         // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlRmmCKp8BYCfhXSVO8oapI0MtnTbf5kU",
+            authDomain: "skill-craft-79597.firebaseapp.com",
+            projectId: "skill-craft-79597",
+            storageBucket: "skill-craft-79597.firebasestorage.app",
+            messagingSenderId: "916636695046",
+            appId: "1:916636695046:web:dd600d39c5ad1af81ea187",
+            measurementId: "G-3MM50DH5SY"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
     
 
-        // Handle enroll button clicks
+    
+    // Track authentication state
+    let currentUser = null;
+    
+    // Check authentication state when page loads
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            currentUser = user;
+            console.log("User is authenticated:", user.uid);
+            setupEnrollButtons(); // Set up buttons only after auth is confirmed
+        } else {
+            currentUser = null;
+            console.log("User is not authenticated");
+            // Option 1: Redirect to login immediately
+            // window.location.href = 'login.html';
+            
+            // Option 2: Show login prompt when trying to enroll
+            // (Keep buttons enabled but show login when clicked)
+            setupEnrollButtons();
+        }
+    });
+
+    // Handle enroll button clicks with auth check
+    function setupEnrollButtons() {
         document.querySelectorAll('.enroll-btn').forEach(button => {
             button.addEventListener('click', function() {
+                if (!currentUser) {
+                    // User not logged in - show message or redirect
+                    alert('Please login first to enroll in courses');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
                 const course = this.dataset.course;
                 if (course === 'web') {
                     // Only web development course is available for now
+                    // You could also log the enrollment to Firebase
+                    console.log(`User ${currentUser.uid} enrolling in web development`);
                     window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScjuQQOBOnPyvhjIL-_3VwGyMBKLb8vPT1y3LF76U8o5Oanpg/viewform?usp=header';
                 }
             });
         });
+    }
+
     </script>
     
     
