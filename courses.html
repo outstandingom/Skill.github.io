@@ -332,12 +332,12 @@ scripts) ... -->
         button.disabled = true;
         button.innerHTML = '<span class="spinner"></span> Enrolling...';
         window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScjuQQOBOnPyvhjIL-_3VwGyMBKLb8vPT1y3LF76U8o5Oanpg/viewform?usp=sharing&ouid=110125656968660343970';
-      /*  try {
+        try {
             const course = this.dataset.course;
-            if (course === 'web') {
+            if (course === 'course1') {
                 await db.collection('enrollments').add({
                     userId: currentUser.uid,
-                    course: 'web',
+                    course: 'course1',
                     timestamp: new Date()
                 });
                 window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLScjuQQOBOnPyvhjIL-_3VwGyMBKLb8vPT1y3LF76U8o5Oanpg/viewform?usp=sharing&ouid=110125656968660343970';
@@ -349,7 +349,6 @@ scripts) ... -->
             alert("Failed to enroll. Please try again.");
         }
     } 
-    */
         </script>
     
     
